@@ -1,0 +1,102 @@
+                <!DOCTYPE html>
+                <html lang="de">
+                <head>
+                    <meta charset="UTF-8">
+                    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                    <link rel="preconnect" href="https://fonts.googleapis.com">
+                    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+                    <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro:ital,wght@0,200..900;1,200..900&display=swap" rel="stylesheet">
+                    <link rel="preconnect" href="https://fonts.googleapis.com">
+                    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+                    <link href="https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet">
+                    <title>Atomuhr</title>
+                    <style>
+                        body {
+                            font-family: "Figtree", sans-serif;
+                            display: flex;
+                            flex-direction: column;
+                            justify-content: center;
+                            align-items: center;
+                            height: 100vh;
+                            background-color: #282c36;
+                            color: white;
+                            text-align: center;
+                        }
+                        h1 {
+                            font-size: 2em;
+                            font-weight: 900;
+                            margin-bottom: 1rem;
+                            margin-top: 0.5rem
+                        }
+                        #clock {
+                            font-size: 5rem;
+                            /* font-weight: bold; */
+                            /*font-family: Source Code Pro, sans-serif; */
+                            font-feature-settings: 'tnum';
+                        }
+
+                        .container {
+                            background: #003a4a;
+                            border-radius: 3rem;
+                            padding: 1.5rem;
+                            box-shadow: #111111 0rem 1.2rem 5rem;
+                        }
+
+                        .millisekunden {
+                            font-size: 2.5rem;
+                        }
+
+                        .home {
+                            position: absolute;
+                            top: 2%;
+                            left: 2%;
+                            font-size: 1rem
+                        }
+
+                        @media screen and (max-width: 1000px) {
+                            #clock {
+                                font-size: 3rem;
+                                /* font-weight: bold; */
+                            }
+                            .millisekunden {
+                                font-size: 1.5rem;
+                            }
+                        }
+ 
+                    </style>
+                </head>
+                <body>
+
+                    <a href="/index.html" class="home">Home</a>
+                    <div class="container">
+                        <h1 class="font-effect-font-effect-3d">ATOMUHR</h1>
+                        <div id="clock">Lädt...</div>
+                    </div>
+                    
+
+                    <script>
+                        let lastTime = Date.now();
+                        let smoothMs = new Date().getMilliseconds();
+
+                        function updateClock() {
+                            let now = Date.now();
+                            let elapsed = now - lastTime; // Zeit seit dem letzten Frame
+                            lastTime = now; // Speichern für nächstes Frame
+
+                            smoothMs += elapsed;
+                            if (smoothMs >= 1000) {
+                                smoothMs = 0; // Korrigieren, falls über 999
+                            }
+
+                            let date = new Date(now);
+                            let timeString = date.toLocaleTimeString('de-AT', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+                            let msString = `.${String(Math.floor(smoothMs)).padStart(3, '0')}`;
+
+                            document.getElementById('clock').innerHTML = `${timeString}<span class="millisekunden">${msString}</span>`;
+                            requestAnimationFrame(updateClock);
+                        }
+
+                        updateClock();
+                    </script>
+                </body>
+                </html>

@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kennzeichen</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,300..900;1,300..900&family=Monomaniac+One&display=swap" rel="stylesheet">
+  <style>
+    html {
+      width: 100%;
+      height: 100%;
+      font-family: "Figtree", serif;
+    }
+
+    .center {
+      text-align: center;
+    }
+
+    .eingabediv {
+      margin-top: 15rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+    input {
+      font-family: "Monomaniac One", serif;
+      font-size: 5rem;
+      width: 8rem;
+      text-align: center;
+      border-radius: 1rem;
+      border-color: #000000;
+      box-shadow: 0px 0px 1rem rgba(0, 0, 0, 0.3);
+      text-transform: uppercase; /* Alle Eingaben in Großbuchstaben umwandeln */
+    }
+
+    #ausgabe {
+      margin-top: 1rem;
+      font-size: 1.5rem;
+    }
+  </style>
+</head>
+<body>
+  <a href="/index.html" class="home">Home</a>
+
+  <h1 class="center">Kennzeichenfinder</h1>
+  <p class="center">Finde jeden Bezirk österreichischer Kennzeichen! Tippe einfach die ersten zwei Buchstaben in das Feld und du hast das Ergebnis!</p>
+
+  <div class="eingabediv">
+    <input id="eingabe" type="text" maxlength="2" size="25" oninput="updateAusgabe()" placeholder="--" oninput="this.value = this.value.toUpperCase()">
+    <p id="ausgabe">Gib ein Kennzeichen ein, zB: "W"</p>
+  </div>
+
+  <script>
+    // Liste der Kennzeichen und deren Ausgaben
+    const kennzeichenListe = {
+          // Burgenland
+      E: 'Eisenstadt',
+      EU: 'Eisenstadt Umgebung',
+      GS: 'Güssing',
+      JE: 'Jennersdorf',
+      MA: 'Mattersburg',
+      ND: 'Neusiedl am See',
+      OP: 'Oberpullendorf',
+      OW: 'Oberwart',
+          // Kärnten
+      FE: 'Feldkirchen',
+      HE: 'Hermagor',
+      K: 'Klagenfurt Stadt ODER Landesorgan Kärnten',
+      KL: 'Klagenfurt Land',
+      SP: 'Spittal an der Drau',
+      SV: 'St. Veit an der Glan',
+      VI: 'Villach Stadt',
+      VL: 'Villach Land',
+      VK: 'Völkermarkt',
+      WO: 'Wolfsberg',
+          //Niederösterreich
+      AM: 'Amstetten',
+      BL: 'Bruck an der Leitha',
+      BN: 'Baden',
+      GD: 'Gmünd',
+      GF: 'Gänserndorf',
+      HL: 'Hollabrunn',
+      HO: 'Horn',
+      KG: 'Klosterneuburg',
+      KO: 'Korneuburg',
+      KR: 'Krems Land',
+      KS: 'Krems an der Donau Stadt',
+      LF: 'Lilienfeld',
+      MD: 'Mödling',
+      ME: 'Melk',
+      MI: 'Mistelbach',
+      NK: 'Neunkirchen',
+      P: 'St. Pölten',
+      PL: 'St. Pölten Land',
+      SB: 'Scheibbs',
+      SW: 'Schwechat',
+      TU: 'Tulln',
+      WB: 'Wiener Neustadt Land',
+      WN: 'Wiener Neustadt Stadt',
+      WT: 'Waidhofen an der Thaya',
+      WY: 'Waidhofen an der Ybbs',
+      ZT: 'Zwettl',
+          //Oberösterreich
+      BR: 'Braunau',
+      EF: 'Eferding',
+      FR: 'Freistadt',
+      GM: 'Gmunden',
+      GR: 'Grieskirchen',
+      KI: 'Kirchdorf an der Krems',
+      L: 'Linz',
+      LL: 'Linz Land',
+      PE: 'Perg',
+      RI: 'Ried im Innkreis',
+      RO: 'Rohrbach',
+      SD: 'Schärding',
+      SE: 'Steyr Land',
+      SR: 'Steyr Stadt',
+      UU: 'Urfahr Umgebung',
+      VB: 'Vöcklabruck',
+      WE: 'Wels Stadt',
+      WL: 'Wels Land',
+          //Salzburg
+      HA: 'Hallein',
+      JO: 'St. Johann im Pongau',
+      S: 'Salzburg Stadt ODER Landesorgan Salzburg',
+      SL: 'Salzburg Land',
+      TA: 'Tamsweg',
+      ZE: 'Zell am See',
+          //Steiermark
+      BA: 'Bad Aussee',
+      BM: 'Bruck-Mürzzuschlag',
+      DL: 'Deutschlandsberg',
+      G: 'Graz',
+      GB: 'Gröbming',
+      GU: 'Graz Umgebung',
+      HF: 'Hartberg-Fürstenfeld',
+      LB: 'Leibnitz',
+      LE: 'Leoben Stadt',
+      LI: 'Liezen',
+      LN: 'Leoben Umgebung',
+      MT: 'Murtal',
+      MU: 'Murau',
+      SO: 'Südoststeiermark',
+      VO: 'Voitsberg',
+      WZ: 'Weiz',
+          //Tirol
+      I: 'Innsbruck',
+      IL: 'Innsbruck Land',
+      IM: 'Imst',
+      KB: 'Kitzbühel',
+      KU: 'Kufstein',
+      LA: 'Landeck',
+      LZ: 'Lienz',
+      RE: 'Reutte',
+      SZ: 'Schwaz',
+          //Vorarlberg
+      B: 'Bregenz',
+      BZ: 'Bludenz',
+      DO: 'Dornbirn',
+      FK: 'Feldkirch',
+      //Wien
+      W: 'Wien ODER Landesorgan Wien',
+          //Sonderkennzeichen
+      A: 'Sonderkennzeichen für den Bundespräsidenten, Präsidenten des National- und Bundesrats, Mitglieder der Bundesregierung, Staatssekretäre, Mitglieder der Volksanwaltschaft, Präsidenten/Vizepräsidenten des Rechnungs-, Verfassungsgerichts-, Verwaltungsgerichts- und Obersten Gerichtshofes',
+      B: 'Landesorgan Burgenland',
+      //K: 'Landesorgan Kärnten',
+      N: 'Landesorgan Niederösterreich',
+      O: 'Landesorgan Oberösterreich',
+      //S: 'Landesorgan Salzburg',
+      ST: 'Landesorgan Steiermark',
+      T: 'Landesorgan Tirol',
+      V: 'Landesorgan Vorarlberg',
+      //W: 'Landesorgan Wien',
+      BD: 'Bundesbusdienst – Omnibusse, die zur Verwendung im Kraftfahrlinienverkehr der Österreichischen Bundesbahnen (ÖBB) und der Post- und Telegraphenverwaltung bestimmt sind',
+      BH: 'Bundesheer',
+      BP: 'Bundespolizei',
+      FV: 'Finanzverwaltung',
+      FW: 'Feuerwehr',
+      JW: 'Justizwache',
+      PT: 'Post',
+      CD: 'steht für: "corps diplomatique"; Dienstfahrzeugen internationaler Organisationen in Österreich oder Kfz von Mitgliedern des diplomatischen Personals der ausländischen diplomatischen Vertretungsbehörden in Österreich',
+      CC: 'steht für: "corps consulaire"; Kfz ausländischer Berufskonsuln in Österreich',
+    };
+
+    function updateAusgabe() {
+      const eingabe = document.getElementById('eingabe').value.toUpperCase();
+      const ausgabe = document.getElementById('ausgabe');
+
+      // Überprüfe, ob die Eingabe in der Liste existiert
+      if (kennzeichenListe[eingabe]) {
+        ausgabe.textContent = kennzeichenListe[eingabe];
+      } else {
+        ausgabe.textContent = '';
+      }
+    }
+  </script>
+</body>
+</html>

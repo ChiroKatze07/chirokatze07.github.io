@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <h1><marquee>Hallo</marquee></h1>
+
+  <!-- Tag-/Nachtmodus -->
+  <div class="day-night-toggle" style="position: absolute; top: 5rem; right: 2rem;">
+    Nachtmodus <input type="checkbox" id="day-night-switch">
+  </div>
+  <script>
+    const themeToggle = document.getElementById('day-night-switch');
+    const body = document.body;
+
+    themeToggle.addEventListener('change', () => {
+      if (themeToggle.checked) {
+        body.classList.add('dark-theme');
+      } else {
+        body.classList.remove('dark-theme');
+      }
+    });
+  </script>
+  <style>
+    body {
+      background-color: white;
+      color: black;
+    }
+    
+    /* Dark theme */
+    body.dark-theme {
+      background-color: black;
+      color: white;
+    }
+  </style>
+
+  
+<ul>
+  <li><a href="/pages/leer-text.html">Leerzeichen Text</a></li>
+  <li><a href="/pages/schaltjahre.html">Schaltjahre</a></li> 
+  <li><a href="/pages/website.html">Webseiten</a>
+  <li><a href="/pages/uhr.html">Uhr</a></li>
+  <li><a href="/pages/burgerpommes-dislikes.html">Burgerpommes Dislikes</a></li>
+  <li><a href="/pages/burgerpommes2-dislikes.html">Burgerpommes 2 Dislikes</a></li>
+  <li><a href="/pages/burgerpommes2-likes-bis-1mio.html">Burgerpommes 2 Likes bis 1 Mio.</a></li>
+  <li><a href="/pages/gewichtung.html">Gewichtung</a></li>
+  <li><a href="/pages/zahlen_umwandler.html">Zahlenumwandler</a></li>
+  <li><a href="/pages/impressum.html">Impressum</a></li>
+  <li><a href="/pages/u-bahn.html">U Bahn</a></li>
+  <li><a href="/pages/u-bahn-uhr.html">U Bahn Uhr</a></li>
+  <li><a href="/pages/kennzeichen.html">Kennzeichenfinder</a></li>
+  <li><a href="/pages/atomuhr.html">Atomuhr</a></li>
+  <li><a href="/pages/atomtimeruhr.html">Atomtimeruhr</a></li>
+  <li><a href="/pages/sekundentimer.html">Sekundentimer</a></li>
+  <li><a href="/pages/seetemperatur.html">Seetemperatur</a></li>
+  <li><a href="/pages/download-geschwindigkeit.html">Download Geschwindigkeit</a></li>
+  <li><a href="/pages/mallede-uhr.html">Mallede Uhr</a></li>
+</ul>
+</body>
+</html>

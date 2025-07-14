@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400..800&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro&display=swap" rel="stylesheet">
+    <title>Zahlenumwandler</title>
+    <style>
+        body {
+            font-family: Syne, sans-serif;
+            margin: 50px;
+        }
+        .result {
+            margin-top: 20px;
+        }
+
+      nav {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          padding: 10px;
+      }
+
+      #romanResult, #hexResult, #octalResult, #binaryResult, #binaryResult, #binarySpacedResult, #floatResult {
+        font-family: Source Code Pro;
+      }
+    </style>
+</head>
+<body>
+
+  <nav>
+    <ul>
+      <li><a href="/index.html">Home</a></li>
+    </ul>
+  </nav>
+  
+<h1>Zahlenumwandler</h1>
+
+  <p>Geben Sie eine Zahl ein, um sie in verschiedene Formate umzuwandeln:</p>
+
+<input type="number" id="numberInput" placeholder="Zahl eingeben" />
+<button onclick="convertNumber()">Umwandeln</button>
+
+<div class="result">
+    <p><strong>Römisch:</strong> <span id="romanResult"></span></p>
+    <p><strong>Hexadezimal:</strong> <span id="hexResult"></span></p>
+    <p><strong>Oktal:</strong> <span id="octalResult"></span></p>
+    <p><strong>Binär:</strong> <span id="binaryResult"></span></p>
+    <p><strong>Binär (mit Trennungen):</strong> <span id="binarySpacedResult"></span></p>
+    <p><strong>Gleitkommadarstellung:</strong> <span id="floatResult"></span></p>
+</div>
+
+<script>
+    function convertToRoman(num) {
+        if (num === 0) return 'Null';
+        const romanNumeralMap = [
+            { value: 1000, symbol: 'M' },
+            { value: 900, symbol: 'CM' },
+            { value: 500, symbol: 'D' },
+            { value: 400, symbol: 'CD' },
+            { value: 100, symbol: 'C' },
+            { value: 90, symbol: 'XC' },
+            { value: 50, symbol: 'L' },
+            { value: 40, symbol: 'XL' },
+            { value: 10, symbol: 'X' },
+            { value: 9, symbol: 'IX' },
+            { value: 5, symbol: 'V' },
+            { value: 4, symbol: 'IV' },
+            { value: 1, symbol: 'I' }
+        ];
+
+        let roman = '';
+        let positiveNum = Math.abs(num);
+
+        for (const { value, symbol } of romanNumeralMap) {
+            while (positiveNum >= value) {
+                roman += symbol;
+                positiveNum -= value;
+            }
+        }
+
+        return num < 0 ? `-${roman}` : roman;
+    }
+
+    function formatBinaryWithSpaces(binStr) {
+        return binStr.replace(/(.{4})/g, '$1 ').trim();
+    }
+
+    function convertNumber() {
+        const num = parseFloat(document.getElementById('numberInput').value);
+        if (isNaN(num)) {
+            alert("Bitte eine gültige Zahl eingeben!");
+            return;
+        }
+
+        const intPart = Math.floor(Math.abs(num)); // Nur den ganzzahligen Teil für die meisten Umwandlungen verwenden
+
+        // Römisch
+        document.getElementById('romanResult').textContent = convertToRoman(num);
+
+        // Hexadezimal
+        document.getElementById('hexResult').textContent = intPart.toString(16).toUpperCase();
+
+        // Oktal
+        document.getElementById('octalResult').textContent = intPart.toString(8);
+
+        // Binär
+        const binaryStr = intPart.toString(2);
+        document.getElementById('binaryResult').textContent = binaryStr;
+
+        // Binär mit Trennungen
+        document.getElementById('binarySpacedResult').textContent = formatBinaryWithSpaces(binaryStr);
+
+        // Gleitkommadarstellung
+        document.getElementById('floatResult').textContent = num.toExponential();
+    }
+</script>
+
+</body>
+</html>

@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Uhr</title>
+    <!-- Google Fonts -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Ultra&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Rozha+One&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Rubik+Mono+One&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500&display=swap" rel="stylesheet">
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background: #000;
+            color: #fff;
+            font-family: 'Roboto', sans-serif;
+            font-size: 3rem;
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        .clock {
+            display: flex;
+            font-weight: 400; /* Default font weight for the clock */
+        }
+
+        .digit {
+            position: relative;
+            width: 1em;
+            height: 1em;
+            text-align: center;
+        }
+
+        .digit div {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: -100%;
+            animation: fall 0.5s forwards;
+        }
+
+        .colon {
+            width: 0.5em;
+        }
+
+        @keyframes fall {
+            to {
+                top: 0;
+            }
+        }
+
+        .menu {
+            position: fixed;
+            bottom: -120px; /* Ensure menu is hidden off-screen */
+            left: 0;
+            right: 0;
+            background: #222;
+            color: #fff;
+            padding: 0.5rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: bottom 0.3s ease;
+            font-family: 'Roboto', sans-serif; /* Font for menu items */
+            font-size: 1rem; /* Font size for menu items */
+        }
+
+        .menu.active {
+            bottom: 0; /* Show menu when active */
+        }
+
+        .menu label, .menu select, .menu input[type="range"] {
+            margin: 0 0.5rem;
+        }
+
+        .menu select, .menu input[type="range"] {
+            background: #333;
+            color: #fff;
+            border: none;
+            padding: 0.5rem;
+            border-radius: 5px;
+        }
+
+        .menu input[type="range"] {
+            width: 120px; /* Adjust width for a compact design */
+        }
+
+        @font-face {
+          font-family: 'bauhaus93';
+          src: url('/media/uhr/bauhaus93.ttf');
+        }
+
+        @font-face {
+          font-family: 'calibri';
+          src: url('/media/uhr/calibri.ttf');
+        }
+
+        @font-face {
+          font-family: 'comic_sans';
+              src: url('/media/uhr/comic_sans.ttf');
+        }
+
+        @font-face {
+          font-family: 'sans-variable';
+              src: url('/media/uhr/sans-variable.woff2');
+        }
+
+        @font-face {
+          font-family: 't_n_r';
+              src: url('/media/uhr/t_n_r.ttf');
+        }
+
+        @font-face {
+          font-family: 'tern';
+              src: url('/media/uhr/tern.ttf');
+
+
+
+
+    </style>
+</head>
+<body>
+    <div class="clock" id="clock">
+        <!-- Clock digits will be inserted here -->
+    </div>
+
+    <div class="menu" id="menu">
+        <label for="font">Schriftart:</label>
+        <select id="font" onloadstart="Roboto">
+            <option value="'Roboto', sans-serif-">Roboto</option>
+            <option value="'Open Sans', sans-serif">Open Sans</option>
+            <option value="'Montserrat', sans-serif">Montserrat</option>
+            <option value="'Ultra', serif">Ultra</option>
+            <option value="'Abril Fatface', serif">Abril</option>
+            <option value="'Rozha One', serif">Rozha</option>
+            <option value="'Rubik Mono One', monospace">Rubik</option>
+            <option value="'Source Code Pro', monospace">Source Code Pro</option>
+            <option value="'DM Mono', monospace">DM Mono</option>
+            <option value="'bauhaus93', sans-serif">Bauhaus 93</option>
+            <option value="'calibri', sans-serif">Calibri</option>
+            <option value="'comic_sans', sans-serif">Comic Sans</option>
+            <option value="'sans-variable', sans-serif">XXXLutz Sans</option>
+            <option value="'t_n_r', sans-serif">Times New Roman</option>
+            <option value="'tern', sans-serif">TERN</option>
+        </select>
+
+        <label for="font-size">Schriftgröße:</label>
+        <input type="range" id="font-size" min="1" max="20" step="0.1" value="3">
+        <span id="font-size-value">3</span> rem
+
+        <!-- Slider für font-weight, initially hidden -->
+        <label for="font-weight" id="font-weight-label" style="display:none;">Gewichtung:</label>
+        <input type="range" id="font-weight" min="100" max="900" step="10" value="700" style="display:none;">
+        <span id="font-weight-value" style="display:none;">700</span>
+    </div>
+
+    <script>
+        function getTime() {
+            const now = new Date();
+            return {
+                hours: String(now.getHours()).padStart(2, '0'),
+                minutes: String(now.getMinutes()).padStart(2, '0'),
+                seconds: String(now.getSeconds()).padStart(2, '0'),
+            };
+        }
+
+        function createDigitElement(digit) {
+            const digitDiv = document.createElement('div');
+            digitDiv.className = 'digit';
+            const innerDiv = document.createElement('div');
+            innerDiv.textContent = digit;
+            digitDiv.appendChild(innerDiv);
+            return digitDiv;
+        }
+
+        function updateClock() {
+            const { hours, minutes, seconds } = getTime();
+            const timeString = `${hours}:${minutes}:${seconds}`;
+            const clockDiv = document.getElementById('clock');
+
+            const newDigits = timeString.split('').map((char, index) => {
+                if (char === ':') {
+                    const colon = document.createElement('div');
+                    colon.className = 'colon';
+                    colon.textContent = ':';
+                    return colon;
+                }
+                return createDigitElement(char);
+            });
+
+            const oldDigits = Array.from(clockDiv.children);
+
+            newDigits.forEach((newDigit, index) => {
+                const oldDigit = oldDigits[index];
+                if (oldDigit && oldDigit.textContent !== newDigit.textContent) {
+                    clockDiv.replaceChild(newDigit, oldDigit);
+                }
+            });
+
+            if (oldDigits.length === 0) {
+                newDigits.forEach(digit => clockDiv.appendChild(digit));
+            }
+        }
+
+        document.body.addEventListener('click', () => {
+            const menu = document.getElementById('menu');
+            menu.classList.toggle('active');
+        });
+
+        document.getElementById('font').addEventListener('change', (event) => {
+            const fontFamily = event.target.value;
+            document.getElementById('clock').style.fontFamily = fontFamily;
+
+            const fontWeightSlider = document.getElementById('font-weight');
+            const fontWeightLabel = document.getElementById('font-weight-label');
+            const fontWeightValue = document.getElementById('font-weight-value');
+
+            // Check if the selected font is 'sans-variable'
+            if (fontFamily.includes('sans-variable')) {
+                fontWeightSlider.style.display = 'inline-block';
+                fontWeightLabel.style.display = 'inline-block';
+                fontWeightValue.style.display = 'inline-block';
+            } else {
+                fontWeightSlider.style.display = 'none';
+                fontWeightLabel.style.display = 'none';
+                fontWeightValue.style.display = 'none';
+                document.getElementById('clock').style.fontWeight = '400'; // Reset to default weight if not sans-variable
+            }
+        });
+
+        document.getElementById('font-size').addEventListener('input', (event) => {
+            const size = parseFloat(event.target.value).toFixed(1); // Format the value to one decimal place
+            document.getElementById('clock').style.fontSize = `${size}rem`;
+            document.getElementById('font-size-value').textContent = size.replace('.', ',');
+        });
+
+        document.getElementById('font-weight').addEventListener('input', (event) => {
+            const weight = event.target.value;
+            document.getElementById('clock').style.fontWeight = weight;
+            document.getElementById('font-weight-value').textContent = weight;
+        });
+
+        setInterval(updateClock, 1000);
+        updateClock();
+    </script>
+</body>
+</html>

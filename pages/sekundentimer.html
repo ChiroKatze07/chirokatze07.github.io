@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sekundentimer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <style>
+
+    html {
+      font-family: Figtree, sans-serif;
+      font-size: 1.2rem
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      background-color: #171924;
+    }
+
+    .box {
+      align-items: center;
+      justify-content: center;
+      background-color: #1c2136;
+      color: white;
+      font-weight: 900;
+      border-radius: 2rem;
+      box-shadow: #111111 0rem 1.2rem 5rem;
+      margin: 1rem;
+    }
+
+    #timer {
+      font-feature-settings: 'tnum';
+      font-size: 6rem;
+      margin-top: 12%
+    }
+    
+  </style>
+  
+  <a href="/index.html">Home</a>
+
+  <div class="box">
+    <p id="timer">Bitte Datum und Zeit (erneut) eingeben</p>
+
+    <p id="words">SIEBEN ZIG TAUSEND FÜNF HUNDERT ZWEI UND VIERZIG</p>
+
+    <input type="datetime-local">
+  </div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const timerElement = document.getElementById("timer");
+        const wordsElement = document.getElementById("words");
+        const inputElement = document.querySelector("input[type=datetime-local]");
+        let targetTime = 0;
+        let soundEnabled = false;
+
+        // Create switch for sound
+        const soundSwitch = document.createElement("input");
+        soundSwitch.type = "checkbox";
+        soundSwitch.id = "soundSwitch";
+        const label = document.createElement("label");
+        label.htmlFor = "soundSwitch";
+        label.textContent = "Ton bei neuer Sekunde";
+        document.body.appendChild(label);
+        document.body.appendChild(soundSwitch);
+
+        soundSwitch.addEventListener("change", function () {
+            soundEnabled = soundSwitch.checked;
+        });
+
+        function numberToWords(num) {
+            const ones = ["", "EINS", "ZWEI", "DREI", "VIER", "FÜNF", "SECHS", "SIEBEN", "ACHT", "NEUN"];
+            const teens = ["ZEHN", "ELF", "ZWÖLF", "DREIZEHN", "VIERZEHN", "FÜNFZEHN", "SECHSZEHN", "SIEBZEHN", "ACHTZEHN", "NEUNZEHN"];
+            const tens = ["", "ZEHN", "ZWANZIG", "DREIẞIG", "VIERZIG", "FÜNFZIG", "SECHZIG", "SIEBZIG", "ACHTZIG", "NEUNZIG"];
+
+            function convertBelowThousand(n) {
+                let result = "";
+                if (n >= 100) {
+                    result += ones[Math.floor(n / 100)] + " HUNDERT ";
+                    n %= 100;
+                }
+                if (n >= 20) {
+                    result += ones[n % 10] ? ones[n % 10] + " UND " : "";
+                    result += tens[Math.floor(n / 10)] + " ";
+                } else if (n >= 10) {
+                    result += teens[n - 10] + " ";
+                } else if (n > 0) {
+                    result += ones[n] + " ";
+                }
+                return result.trim();
+            }
+
+            if (num === 0) return "NULL";
+
+            let words = "";
+            if (num >= 1000) {
+                words += convertBelowThousand(Math.floor(num / 1000)) + " TAUSEND ";
+                num %= 1000;
+            }
+            words += convertBelowThousand(num);
+
+            return words.trim();
+        }
+
+        function playBeep() {
+            const audio = new Audio("/media/sekundentimer/beep.mp3");
+            audio.play();
+        }
+
+        function updateTimer() {
+            if (targetTime > 0) {
+                const now = new Date().getTime();
+                const diff = Math.floor((targetTime - now) / 1000);
+                timerElement.textContent = diff > 0 ? diff : "0";
+                wordsElement.textContent = numberToWords(diff);
+                if (soundEnabled) {
+                    playBeep();
+                }
+            }
+        }
+
+        inputElement.addEventListener("change", function () {
+            targetTime = new Date(inputElement.value).getTime();
+            if (isNaN(targetTime)) {
+                targetTime = 0;
+                wordsElement.textContent = "";
+            }
+            updateTimer();
+        });
+
+        setInterval(updateTimer, 1000);
+    });
+
+  </script>
+  
+</body>
+</html>

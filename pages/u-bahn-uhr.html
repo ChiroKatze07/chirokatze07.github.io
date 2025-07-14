@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Uhr</title>
+</head>
+<body>
+  <style>
+
+      html {
+        font-size:20rem;
+        text-align: center;
+        box-align: center;
+        background-color: black;
+      }
+    
+    .clock {
+      position: absolute;
+      width: 2rem; /* Uhr klein gemacht */
+      height: 2rem;
+      border: 0.1rem solid #eaff00;
+      border-radius: 50%;
+      background-color: black;
+      margin-right: 0.5rem; /* Abstand zur Tafel */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      
+      /* Markierungen */
+      .clock::before,
+      .clock::after {
+        content: "";
+        position: absolute;
+        background-color: #eaff00;
+      }
+
+      /* Stundenmarkierungen */
+      .hour-mark {
+        position: absolute;
+        width: 0.1rem;
+        height: 0.4rem;
+        background-color: #eaff00;
+        transform-origin: center 1rem; /* Zentrierung */
+        margin-top: -1.6rem;
+      }
+
+      .minute-mark {
+        position: absolute;
+        width: 0.05rem;
+        height: 0.1rem;
+        background-color: #eaff00;
+        transform-origin: center 1rem;
+        margin-top: -1.9rem;
+      }
+
+      /* Uhr-Zeiger */
+      .hand {
+        position: absolute;
+        bottom: 50%;
+        left: 50%;
+        background-color: #eaff00;
+        transform-origin: bottom;
+        transform: translateX(-50%);
+      }
+
+      .hour {
+        width: 0.15rem;
+        height: 0.8rem;
+        background-color: #eaff00;
+      }
+
+      .minute {
+        width: 0.1rem;
+        height: 1rem;
+        background-color: #eaff00;
+      }
+    }
+  </style>
+  <div class="clock">
+    <!-- Stundenmarkierungen -->
+    <div class="hour-mark" style="transform: rotate(0deg);"></div>
+    <div class="hour-mark" style="transform: rotate(30deg);"></div>
+    <div class="hour-mark" style="transform: rotate(60deg);"></div>
+    <div class="hour-mark" style="transform: rotate(90deg);"></div>
+    <div class="hour-mark" style="transform: rotate(120deg);"></div>
+    <div class="hour-mark" style="transform: rotate(150deg);"></div>
+    <div class="hour-mark" style="transform: rotate(180deg);"></div>
+    <div class="hour-mark" style="transform: rotate(210deg);"></div>
+    <div class="hour-mark" style="transform: rotate(240deg);"></div>
+    <div class="hour-mark" style="transform: rotate(270deg);"></div>
+    <div class="hour-mark" style="transform: rotate(300deg);"></div>
+    <div class="hour-mark" style="transform: rotate(330deg);"></div>
+
+    <!-- Minutenmarkierungen -->
+    <script>
+      const clock = document.querySelector('.clock');
+      for (let i = 0; i < 60; i++) {
+        const minuteMark = document.createElement('div');
+        minuteMark.classList.add('minute-mark');
+        minuteMark.style.transform = `rotate(${i * 6}deg)`;
+        clock.appendChild(minuteMark);
+      }
+    </script>
+
+    <!-- Zeiger -->
+    <div class="hand hour" id="hour"></div>
+    <div class="hand minute" id="minute"></div>
+    <div class="hand second" id="second"></div>
+
+  </div>
+
+  <script>
+    // JavaScript für die Uhr
+    function setClock() {
+      const hourHand = document.getElementById("hour");
+      const minuteHand = document.getElementById("minute");
+      const secondHand = document.getElementById("second");
+
+      const now = new Date();
+      const seconds = now.getSeconds() / 60;
+      const minutes = (now.getMinutes() + seconds) / 60;
+      const hours = (now.getHours() % 12 + minutes) / 12;
+
+      hourHand.style.transform = `translateX(-50%) rotate(${hours * 360}deg)`;
+      minuteHand.style.transform = `translateX(-50%) rotate(${minutes * 360}deg)`;
+      secondHand.style.transform = `translateX(-50%) rotate(${seconds * 360}deg)`;
+    }
+
+    setInterval(setClock, 1000);
+    setClock();
+  </script>
+</body>
+</html>

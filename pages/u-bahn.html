@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>U Bahn Wien</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Jersey+10&display=swap" rel="stylesheet">
+  <style>
+    /* Allgemeine Styles */
+    html {
+      height: 100%;
+      width: 100%;
+      background-color: black;
+      color: #eaff00;
+      font-family: "Jersey 10", sans-serif;
+      margin: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 8rem;
+    }
+
+    .anzeigetafel {
+      display: flex;
+      align-items: center;
+      background-color: black;
+      padding: 0.3rem;
+      box-shadow: 0px 0px 5rem rgba(50, 50, 50, 1);
+    }
+
+    /* Uhr-Container */
+    .clock {
+      position: relative;
+      width: 2rem; /* Uhr klein gemacht */
+      height: 2rem;
+      border: 0.1rem solid #eaff00;
+      border-radius: 50%;
+      background-color: black;
+      margin-right: 0.5rem; /* Abstand zur Tafel */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    /* Markierungen */
+    .clock::before,
+    .clock::after {
+      content: "";
+      position: absolute;
+      background-color: #eaff00;
+    }
+
+    /* Stundenmarkierungen */
+    .hour-mark {
+      position: absolute;
+      width: 0.1rem;
+      height: 0.4rem;
+      background-color: #eaff00;
+      transform-origin: center 1rem; /* Zentrierung */
+      margin-top: -1.6rem;
+    }
+
+    .minute-mark {
+      position: absolute;
+      width: 0.05rem;
+      height: 0.1rem;
+      background-color: #eaff00;
+      transform-origin: center 1rem;
+      margin-top: -1.9rem;
+    }
+
+    /* Uhr-Zeiger */
+    .hand {
+      position: absolute;
+      bottom: 50%;
+      left: 50%;
+      background-color: #eaff00;
+      transform-origin: bottom;
+      transform: translateX(-50%);
+    }
+
+    .hour {
+      width: 0.15rem;
+      height: 0.8rem;
+      background-color: #eaff00;
+    }
+
+    .minute {
+      width: 0.1rem;
+      height: 1rem;
+      background-color: #eaff00;
+    }
+
+    /* Anzeigetext */
+    .anzeigetext {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    /* Container für den Text in einer Zeile */
+    .anzeigetext-line {
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+    }
+
+    p {
+      margin: 0;
+      line-height: 1;
+      font-size: 1rem;
+    }
+
+    /* Rechtsbündig für den Stern und die Nummer */
+    .right-align {
+      margin-left: auto;
+    }
+
+    .home {
+      font-size: 0.25rem;
+      position: absolute;
+      top: 0.5rem;
+      left: 0.5rem;
+    }
+  </style>
+</head>
+<body>
+
+
+ <a href="/index.html" class="home">Home</a>
+
+
+<div class="anzeigetafel">
+  <!-- Uhr -->
+  <div class="clock">
+    <!-- Stundenmarkierungen -->
+    <div class="hour-mark" style="transform: rotate(0deg);"></div>
+    <div class="hour-mark" style="transform: rotate(30deg);"></div>
+    <div class="hour-mark" style="transform: rotate(60deg);"></div>
+    <div class="hour-mark" style="transform: rotate(90deg);"></div>
+    <div class="hour-mark" style="transform: rotate(120deg);"></div>
+    <div class="hour-mark" style="transform: rotate(150deg);"></div>
+    <div class="hour-mark" style="transform: rotate(180deg);"></div>
+    <div class="hour-mark" style="transform: rotate(210deg);"></div>
+    <div class="hour-mark" style="transform: rotate(240deg);"></div>
+    <div class="hour-mark" style="transform: rotate(270deg);"></div>
+    <div class="hour-mark" style="transform: rotate(300deg);"></div>
+    <div class="hour-mark" style="transform: rotate(330deg);"></div>
+
+    <!-- Minutenmarkierungen -->
+    <script>
+      const clock = document.querySelector('.clock');
+      for (let i = 0; i < 60; i++) {
+        const minuteMark = document.createElement('div');
+        minuteMark.classList.add('minute-mark');
+        minuteMark.style.transform = `rotate(${i * 6}deg)`;
+        clock.appendChild(minuteMark);
+      }
+    </script>
+
+    <!-- Zeiger -->
+    <div class="hand hour" id="hour"></div>
+    <div class="hand minute" id="minute"></div>
+    <div class="hand second" id="second"></div>
+
+  </div>
+
+  <!-- Textanzeige -->
+  <div class="anzeigetext">
+    <div class="anzeigetext-line">
+      <p id="next">U2 KARLSPLATZ</p>
+      <p class="right-align" id="next-star">&emsp;&emsp;*</p>
+    </div>
+    <div class="anzeigetext-line">
+      <p id="secondnext">U2 KARLSPLATZ</p>
+      <p class="right-align" id="secondnext-number">&emsp;&emsp;_3</p>
+    </div>
+  </div>
+</div>
+
+<script>
+  // JavaScript für die Uhr
+  function setClock() {
+    const hourHand = document.getElementById("hour");
+    const minuteHand = document.getElementById("minute");
+    const secondHand = document.getElementById("second");
+
+    const now = new Date();
+    const seconds = now.getSeconds() / 60;
+    const minutes = (now.getMinutes() + seconds) / 60;
+    const hours = (now.getHours() % 12 + minutes) / 12;
+
+    hourHand.style.transform = `translateX(-50%) rotate(${hours * 360}deg)`;
+    minuteHand.style.transform = `translateX(-50%) rotate(${minutes * 360}deg)`;
+    secondHand.style.transform = `translateX(-50%) rotate(${seconds * 360}deg)`;
+  }
+
+  setInterval(setClock, 1000);
+  setClock();
+</script>
+
+</body>
+</html>

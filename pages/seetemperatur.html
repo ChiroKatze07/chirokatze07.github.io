@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <title>Wassertemperatur – Brennsee</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 2em;
+      background: #f0f8ff;
+      color: #333;
+    }
+    h1 {
+      color: #0066cc;
+    }
+    #temp {
+      font-size: 2em;
+      margin-top: 1em;
+    }
+    #status {
+      margin-top: 0.5em;
+      font-style: italic;
+    }
+  </style>
+</head>
+<body>
+  <h1>Wassertemperatur – Brennsee</h1>
+  <div id="temp">Lade Temperatur...</div>
+  <div id="status"></div>
+
+  <script>
+    async function ladeTemperatur() {
+      const url = "https://info.ktn.gv.at/asp/hydro/daten/json/station/2900121.json";
+
+      try {
+        const response = await fetch(url);
+        if (!response.ok) {
+          throw new Error(`HTTP-Fehler: ${response.status}`);
+        }
+
+        const data = await response.json();
+        console.log("Empfangene Daten:", data); // Debug-Ausgabe
+
+        const temperatur = data.temperatur_w;
+        const zeitpunkt = new Date(data.datum).toLocaleString("de-AT", {
+          dateStyle: "short",
+          timeStyle: "short"
+        });
+
+        if (temperatur !== undefined) {
+          document.getElementById("temp").textContent = `${temperatur.toFixed(1)} °C`;
+          document.getElementById("status").textContent = `Letzte Messung: ${zeitpunkt}`;
+        } else {
+          document.getElementById("temp").textContent = "Keine Temperaturdaten verfügbar.";
+        }
+
+      } catch (error) {
+        console.error("Fehler beim Laden der Temperaturdaten:", error);
+        document.getElementById("temp").textContent = "Fehler beim Laden der Temperatur.";
+        document.getElementById("status").textContent = error.message;
+      }
+    }
+
+    ladeTemperatur();
+  </script>
+</body>
+</html>

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Text-Anzeige</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+  }
+</style>
+</head>
+<body>
+  <nav>
+    <ul>
+      <li><a href="/index.html">Home</a></li>
+    </ul>
+  </nav>
+  <br>
+  <br>
+  <input id="textInput" rows="0" cols="0"></input><br>
+  <br>
+  <div id="output"></div>
+
+
+  <script>
+    document.getElementById("textInput").addEventListener("keydown", function(event) {
+      if (event.key === " ") { // Check if the pressed key is space (the key code for space is " ")
+        updateText();
+      }
+    });
+
+    function updateText() {
+      var inputText = document.getElementById("textInput").value;
+      var outputDiv = document.getElementById("output");
+      outputDiv.innerHTML = "";
+
+      var words = inputText.split(" ");
+      words.forEach(function(word) {
+        outputDiv.innerHTML += word + " ";
+      }); 
+     } 
+  </script>
+</body>
+</html>

@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro:ital,wght@0,200..900;1,200..900&display=swap" rel="stylesheet">
+    <title>Atomtimeruhr</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #eeeeee;
+            margin: 0;
+            color: black;
+            font-family: Source Code Pro, sans-serif;
+        }
+
+        .clock {
+            width: 85vw;
+            max-width: 300px;
+            height: 85vw;
+            max-height: 300px;
+            border: 5px solid white;
+            border-radius: 50%;
+            position: relative;
+            background: black;
+        }
+
+        .hand {
+            position: absolute;
+            bottom: 50%;
+            left: 50%;
+            transform-origin: bottom;
+            background: white;
+        }
+
+        .hour {
+            width: 6px;
+            height: 25%;
+        }
+
+        .minute {
+            width: 4px;
+            height: 35%;
+        }
+
+        .second {
+            width: 2px;
+            height: 40%;
+            background: red;
+        }
+
+        .mark {
+            position: absolute;
+            left: 50%;
+            transform-origin: 50% 90%;
+            background: white;
+        }
+
+        .hour-mark {
+            width: 4px;
+            height: 15%;
+        }
+
+        .minute-mark {
+            width: 2px;
+            height: 10%;
+            transform-origin: 50% 95%;
+        }
+
+        .number {
+            position: absolute;
+            font-size: 16px;
+            color: white;
+            font-weight: bold;
+        }
+
+        #clock {
+            margin-top: 20px;
+            font-size: 3rem;
+        }
+
+        h1 {
+            margin-top: 1.2rem;
+        }
+
+        #countdown {
+            font-size: 2rem;
+            margin-top: 20px;
+        }
+
+        .blinking {
+            animation: blink 1s step-start infinite;
+        }
+
+        @keyframes blink {
+            0% { visibility: visible; }
+            50% { visibility: hidden; }
+            100% { visibility: visible; }
+        }
+    </style>
+</head>
+<body>
+
+    <a href="/index.html">Home</a>
+    
+    <div class="clock" id="analogClock">
+        <div class="hand hour" id="hour"></div>
+        <div class="hand minute" id="minute"></div>
+        <div class="hand second" id="second"></div>
+
+        <!-- Stundenmarkierungen mit Zahlen -->
+
+    </div>
+
+    <h1>ATOMUHR</h1>
+
+    <div id="clock">Lädt...</div>
+    <div id="countdown">Countdown bis 7:00:00</div>
+    <input type="time">
+
+    <script>
+        let lastTime = Date.now();
+        let smoothMs = new Date().getMilliseconds();
+
+        // Zielzeitpunkt: 7:30:00 des aktuellen Tages
+        let userTargetTime = null;
+
+        document.querySelector('input[type="time"]').addEventListener('input', function(event) {
+            const timeParts = event.target.value.split(":");
+            if (timeParts.length === 2) {
+                let target = new Date();
+                target.setHours(parseInt(timeParts[0]), parseInt(timeParts[1]), 0, 0);
+                userTargetTime = target.getTime();
+            }
+        });
+
+        function getTargetTime() {
+            if (userTargetTime !== null) {
+                return userTargetTime;
+            }
+            let target = new Date();
+            target.setHours(7, 30, 0, 0);
+            return target.getTime();
+        }
+
+        let blinkingStarted = false;
+        let blinkEndTime = 0;
+
+        function updateClock() {
+            let now = Date.now();
+            let elapsed = now - lastTime;
+            lastTime = now;
+
+            smoothMs += elapsed;
+            if (smoothMs >= 1000) {
+                smoothMs = 0;
+            }
+
+            let date = new Date(now);
+            let timeString = date.toLocaleTimeString('de-DE', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+            let msString = String(Math.floor(smoothMs)).padStart(3, '0');
+            document.getElementById('clock').textContent = `${timeString}:${msString}`;
+
+            const hours = date.getHours() % 12;
+            const minutes = date.getMinutes();
+            const seconds = date.getSeconds();
+
+            const hourDeg = (hours + minutes / 60) * 360 / 12;
+            const minuteDeg = (minutes + seconds / 60) * 360 / 60;
+            const secondDeg = seconds * 360 / 60;
+
+            document.getElementById('hour').style.transform = `translateX(-50%) rotate(${hourDeg}deg)`;
+            document.getElementById('minute').style.transform = `translateX(-50%) rotate(${minuteDeg}deg)`;
+            document.getElementById('second').style.transform = `translateX(-50%) rotate(${secondDeg}deg)`;
+
+            updateCountdown();
+            requestAnimationFrame(updateClock);
+        }
+
+        function updateCountdown() {
+            let now = Date.now();
+            let targetTime = getTargetTime();
+            let diff = targetTime - now;
+
+            // Wenn der Zielzeitpunkt bereits überschritten ist, rechne den nächsten Tag
+            if (diff < 0) {
+                targetTime += 24 * 60 * 60 * 1000;  // 24 Stunden in Millisekunden
+                diff = targetTime - now;
+            }
+
+            let hours = Math.floor(diff / (1000 * 60 * 60));
+            let minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            let seconds = Math.floor((diff % (1000 * 60)) / 1000);
+            let milliseconds = diff % 1000;
+
+            let countdownString = `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}:${String(milliseconds).padStart(3, '0')}`;
+            document.getElementById('countdown').textContent = `T-${countdownString}`;
+
+            if (now >= targetTime && !blinkingStarted) {
+                blinkingStarted = true;
+                blinkEndTime = now + 5 * 60 * 1000; // 5 Minuten
+                document.getElementById('alert').textContent = "moagn.";
+                document.getElementById('alert').classList.add('blinking');
+            }
+
+            // Stoppe das Blinken nach 5 Minuten
+            if (blinkingStarted && now >= blinkEndTime) {
+                blinkingStarted = false;
+                document.getElementById('alert').classList.remove('blinking');
+                updateCountdown();  // Setze den Countdown fort
+            }
+        }
+
+        updateClock();
+    </script>
+</body>
+</html>

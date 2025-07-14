@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Schaltjahre</title>
+<style>
+  
+  html {
+    height: 100%;
+    width: 100%;
+  }
+  body {
+    background-color: #4a4a4a;
+  }
+  h1 {
+    font-size:60px;
+    text-align:center;
+    font-family:Cormorant;
+    color:#FFFFFF;
+  }
+
+  .ergebnis {
+    font-size:30px;
+    font-family:Cormorant;
+    color:#FFFFFF;
+  }
+
+  .green {
+    color: #00ad00;
+  }
+
+  .bold {
+    font-weight: bold;
+    color:#00ff00
+  }
+
+  .red {
+    color:#dd0000;
+    color:#4a4a4a;
+  }
+
+  .countdown {
+    text-align: center;
+  }
+</style>
+</head>
+<body>
+  <nav>
+    <ul>
+      <li><a href="/index.html">Home</a></li>
+    </ul>
+  </nav>
+  <br>
+  <br>
+    <h1>Schaltjahre</h1>
+    <script>
+      // Funktion zum Anzeigen der Jahre alle 4 Jahre
+      function anzeigenAlle4Jahre() {
+          var startJahr = 0; // Startjahr
+          var endJahr = 100000
+          var alle4Jahre = [];
+
+          // Sammeln aller Jahre, die durch 4 teilbar sind
+          for (var jahr = startJahr; jahr <= endJahr; jahr += 4) {
+              alle4Jahre.push(jahr);
+          }
+
+          // Anzeigen der Jahre im HTML
+          var result = document.getElementById("ergebnis");
+          var aktuellesJahr = new Date().getFullYear();
+
+          // Färben und Fettschrift für jedes Jahr
+          var htmlOutput = '';
+          for (var i = 0; i < alle4Jahre.length; i++) {
+              if (alle4Jahre[i] === aktuellesJahr) {
+                  htmlOutput += '<span class="green bold">' + alle4Jahre[i] + '</span>';
+              } else if (alle4Jahre[i] % 400 === 0) {
+                  htmlOutput += '<span class="green">' + alle4Jahre[i] + '</span>';
+              } else if (alle4Jahre[i] % 100 === 0) {
+                  htmlOutput += '<span class="red">' + alle4Jahre[i] + '</span>';
+              } else {
+                  htmlOutput += '<span class="green">' + alle4Jahre[i] + '</span>';
+              }
+              if (i < alle4Jahre.length - 1) {
+                  htmlOutput += " ";
+              }
+          }
+
+          result.innerHTML = htmlOutput;
+      }
+
+      // Aufrufen der Funktion, wenn die Seite geladen wird
+      window.onload = anzeigenAlle4Jahre;
+    </script>
+  <p id="ergebnis">Wird geladen...</p>
+
+  </html>
+</body>
