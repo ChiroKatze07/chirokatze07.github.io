@@ -4,61 +4,117 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+  <title>Chiro07</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet">
 </head>
 <body>
-  <h1><marquee>Hallo</marquee></h1>
 
-  <!-- Tag-/Nachtmodus -->
-  <div class="day-night-toggle" style="position: absolute; top: 5rem; right: 2rem;">
-    Nachtmodus <input type="checkbox" id="day-night-switch">
-  </div>
-  <script>
-    const themeToggle = document.getElementById('day-night-switch');
-    const body = document.body;
-
-    themeToggle.addEventListener('change', () => {
-      if (themeToggle.checked) {
-        body.classList.add('dark-theme');
-      } else {
-        body.classList.remove('dark-theme');
-      }
-    });
-  </script>
   <style>
-    body {
-      background-color: white;
-      color: black;
+    html {
+      font-family: 'Figtree', sans-serif;
+      background-color: #1c1c1c;
+      color: white
+    }
+
+    h1 {
+      font-size: 48px;
+      font-weight: bolder;
+      font-size: 4rem;
+      margin: 2rem;
+    }
+
+    #home-link {
+      text-decoration: none;
+      color: white
+    }
+
+    #home-link:visited {
+      text-decoration: none;
+      color: white
     }
     
-    /* Dark theme */
-    body.dark-theme {
-      background-color: black;
+    hr {
+      border-top: 2px solid #bbb;
+      border-radius: 5px;
+      margin-left: 4rem;
+      margin-right: 4rem;
+    }
+
+    .top-hr {
+      margin-left: 2rem;
+    }
+
+    nav {
+      margin-left: 1.5rem;
+      margin-bottom: 0rem;
+      margin-top: -1.5rem;
+    }
+
+    nav ul li {
+      display: inline;
+      margin-right: 1rem;
+    }
+
+    nav ul li a {
       color: white;
     }
+
+    nav ul li a:visited {
+      color: white;
+    }
+    
+    h2 {
+      margin: 2rem;
+      margin-bottom: 0rem;
+      font-size: 1.8rem;
+    }
+
+    .links {
+      display: grid;
+      grid-template-columns: auto auto auto;
+      padding: 1rem;
+      max-width: calc(3 * 100px + 2 * 1rem); /* Erste Zahl = Anzahl an Links, Zweite Zahl = Anzahl an Links - 1 */
+    }
+
+    .links > div {
+      padding: 20px;
+      font-size: 30px;
+      text-align: center;
+      height: 135px;
+      display: flex;
+      justify-items: center;
+      align-items: center;
+    }
+
+    .links > div:hover {
+
+      height: 155px;
+
+    }
+
+
+
   </style>
 
+  <h1><a href="https://www.chiro07.at" id="home-link">Chiro07.at</a></h1>
   
-<ul>
-  <li><a href="/pages/leer-text.html">Leerzeichen Text</a></li>
-  <li><a href="/pages/schaltjahre.html">Schaltjahre</a></li> 
-  <li><a href="/pages/website.html">Webseiten</a>
-  <li><a href="/pages/uhr.html">Uhr</a></li>
-  <li><a href="/pages/burgerpommes-dislikes.html">Burgerpommes Dislikes</a></li>
-  <li><a href="/pages/burgerpommes2-dislikes.html">Burgerpommes 2 Dislikes</a></li>
-  <li><a href="/pages/burgerpommes2-likes-bis-1mio.html">Burgerpommes 2 Likes bis 1 Mio.</a></li>
-  <li><a href="/pages/gewichtung.html">Gewichtung</a></li>
-  <li><a href="/pages/zahlen_umwandler.html">Zahlenumwandler</a></li>
-  <li><a href="/pages/impressum.html">Impressum</a></li>
-  <li><a href="/pages/u-bahn.html">U Bahn</a></li>
-  <li><a href="/pages/u-bahn-uhr.html">U Bahn Uhr</a></li>
-  <li><a href="/pages/kennzeichen.html">Kennzeichenfinder</a></li>
-  <li><a href="/pages/atomuhr.html">Atomuhr</a></li>
-  <li><a href="/pages/atomtimeruhr.html">Atomtimeruhr</a></li>
-  <li><a href="/pages/sekundentimer.html">Sekundentimer</a></li>
-  <li><a href="/pages/seetemperatur.html">Seetemperatur</a></li>
-  <li><a href="/pages/download-geschwindigkeit.html">Download Geschwindigkeit</a></li>
-  <li><a href="/pages/mallede-uhr.html">Mallede Uhr</a></li>
-</ul>
+  <nav>
+    <ul>
+      <li><a href="https://www.chiro07.at" style="font-style: italic;">Home</a></li>
+      <li><a href="https://www.chiro07.at/ueber">Über</a></li>
+    </ul>
+  </nav>
+  
+  <hr class="top-hr">
+  <h2>Verlinkungen:</h2>
+
+  <div class="links">
+    <div><a title="Mein YouTube-Hauptkanal" href="https://www.youtube.com/@chirokatze07"><img width="135" alt="Das YouTube-Logo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/62/YouTube_social_white_square_%282024%29.svg/512px-YouTube_social_white_square_%282024%29.svg.png?20241117060723" style="border-radius: 2.25rem;"></a></div>
+    <div><a title="Mein BlueSky-Account" href="https://bsky.app/profile/chirokatze07.bsky.social"><img width="135" alt="Das BlueSky-Logo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7a/Bluesky_Logo.svg/512px-Bluesky_Logo.svg.png?20240211144739"></a></div>
+    <div><a title="Ich auf Spotify (also meine Playlists)" href="https://open.spotify.com/user/314jdywqojzi5tbitiarbpfendeq"><img width="135" alt="Das Spotify-Logo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/84/Spotify_icon.svg/512px-Spotify_icon.svg.png?20220821125323"></a></div>
+  </div>
+  
 </body>
 </html>
