@@ -74,7 +74,7 @@
 
     .links {
       display: grid;
-      grid-template-columns: auto auto auto;
+      grid-template-columns: auto auto auto; /* Bei 3 Links: 3x "auto", bei 4: 4x, usw.*/
       padding: 1rem;
       max-width: calc(3 * 100px + 2 * 1rem); /* Erste Zahl = Anzahl an Links, Zweite Zahl = Anzahl an Links - 1 */
     }
@@ -116,7 +116,7 @@
     <ul>
       <li><a href="https://www.chiro07.at" style="font-style: italic;">Home</a></li>
       <li><a href="https://www.chiro07.at/ueber">Über</a></li>
-      <li><a href="https://www.chiro07.at">Nicht klicken!</li>
+      <li><a href="https://www.chiro07.at">Nicht klicken!</a></li>
     </ul>
   </nav>
   
