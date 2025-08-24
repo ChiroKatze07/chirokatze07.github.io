@@ -95,7 +95,18 @@
 
     }
 
+    .hide {
+      position: absolute;
+      bottom: 10px;
+      right: 10px;
+      opacity: 0;
+    }
 
+    .hide:hover {
+      bottom: 10px;
+      right: 10px;
+      opacity: 1;
+    }
 
   </style>
 
@@ -105,6 +116,7 @@
     <ul>
       <li><a href="https://www.chiro07.at" style="font-style: italic;">Home</a></li>
       <li><a href="https://www.chiro07.at/ueber">Über</a></li>
+      <li><a href="https://www.chiro07.at">Nicht klicken!</li>
     </ul>
   </nav>
   
@@ -117,5 +129,6 @@
     <div><a title="Ich auf Spotify (also meine Playlists)" href="https://open.spotify.com/user/314jdywqojzi5tbitiarbpfendeq"><img width="135" alt="Das Spotify-Logo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/84/Spotify_icon.svg/512px-Spotify_icon.svg.png?20220821125323"></a></div>
   </div>
   
+  <p class="hide">Gefunden!</p>
 </body>
 </html>
