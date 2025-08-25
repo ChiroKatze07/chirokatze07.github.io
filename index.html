@@ -108,6 +108,11 @@
       opacity: 1;
     }
 
+    #warum {
+      cursor: pointer;
+      text-decoration: underline;
+    }
+
   </style>
 
   <h1><a href="https://www.chiro07.at" id="home-link">Chiro07.at</a></h1>
@@ -116,7 +121,7 @@
     <ul>
       <li><a href="https://www.chiro07.at" style="font-style: italic;">Home</a></li>
       <li><a href="https://www.chiro07.at/ueber">Über</a></li>
-      <li><a href="https://www.chiro07.at">Nicht klicken!</a></li>
+      <li><a id="warum" onclick="console.log('why')">Nicht klicken!</a></li>
     </ul>
   </nav>
   
