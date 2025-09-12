@@ -113,6 +113,28 @@
       text-decoration: underline;
     }
 
+    #splash {
+  color: yellow;
+  transform: rotate(-10deg);
+  position: absolute;
+  top: 4.8rem;
+  left: 19.5rem;
+  animation: splash-size 2s infinite ease-in-out;
+  font-size: 1rem;
+  transform: scale(1);
+}
+
+@keyframes splash-size {
+  0% {
+    transform: scale(1) rotate(-10deg);
+  }
+  50% {
+    transform: scale(1.2) rotate(-10deg);
+  }
+  100% {
+    transform: scale(1) rotate(-10deg);
+  }
+}
   </style>
 
   <h1><a href="https://www.chiro07.at" id="home-link">Chiro07.at</a></h1>
@@ -134,6 +156,29 @@
     <div><a title="Ich auf Spotify (also meine Playlists)" href="https://open.spotify.com/user/314jdywqojzi5tbitiarbpfendeq"><img width="135" alt="Das Spotify-Logo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/84/Spotify_icon.svg/512px-Spotify_icon.svg.png?20220821125323"></a></div>
   </div>
   
+  <p id="splash"></p>
+
   <p class="hide">Gefunden!</p>
+
+   <script>
+    async function loadRandomLine() {
+      try {
+        const response = await fetch('/data/splashes.txt');
+        if (!response.ok) {
+          throw new Error("Splashes-Datei konnte nicht geladen werden :(");
+        }
+        const text = await response.text();
+        const lines = text.split(/\r?\n/).filter(line => line.trim() !== ""); 
+        const randomLine = lines[Math.floor(Math.random() * lines.length)];
+        document.getElementById("splash").textContent = randomLine;
+      } catch (error) {
+        console.error(error);
+        document.getElementById("splash").textContent = "fehler beim laden >:(";
+      }
+    }
+
+    loadRandomLine();
+  </script>
+
 </body>
 </html>
