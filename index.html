@@ -13,17 +13,22 @@
 <body>
 
   <style>
-    html {
+   html {
       font-family: 'Figtree', sans-serif;
       background-color: #1c1c1c;
-      color: white
+      color: white;
+    }
+
+    .h1-splash {
+      position: relative; /* Container für h1 und splash */
+      display: inline-block; /* passt sich an die Größe von h1 an */
+      margin: 2rem;
     }
 
     h1 {
-      font-size: 48px;
-      font-weight: bolder;
       font-size: 4rem;
-      margin: 2rem;
+      font-weight: bolder;
+      margin: 0; /* kein zusätzlicher Abstand */
     }
 
     #home-link {
@@ -114,31 +119,27 @@
     }
 
     #splash {
-  color: yellow;
-  transform: rotate(-10deg);
-  position: absolute;
-  top: 4.8rem;
-  left: 19.5rem;
-  animation: splash-size 2s infinite ease-in-out;
-  font-size: 1rem;
-  transform: scale(1);
-}
+      color: yellow;
+      transform: rotate(-10deg) scale(1);
+      position: absolute;
+      top: 2.95rem;   
+      right: -4.8rem; 
+      animation: splash-size 2s infinite ease-in-out;
+      font-size: 1rem;
+    }
 
-@keyframes splash-size {
-  0% {
-    transform: scale(1) rotate(-10deg);
-  }
-  50% {
-    transform: scale(1.2) rotate(-10deg);
-  }
-  100% {
-    transform: scale(1) rotate(-10deg);
-  }
-}
+    @keyframes splash-size {
+      0%   { transform: rotate(-10deg) scale(1); }
+      50%  { transform: rotate(-10deg) scale(1.2); }
+      100% { transform: rotate(-10deg) scale(1); }
+    }
   </style>
 
-  <h1><a href="https://www.chiro07.at" id="home-link">Chiro07.at</a></h1>
-  
+  <div class="h1-splash">	
+    <h1><a href="https://www.chiro07.at" id="home-link">Chiro07.at</a></h1>
+    <p id="splash"></p>
+  </div>
+
   <nav>
     <ul>
       <li><a href="https://www.chiro07.at" style="font-style: italic;">Home</a></li>
@@ -156,7 +157,7 @@
     <div><a title="Ich auf Spotify (also meine Playlists)" href="https://open.spotify.com/user/314jdywqojzi5tbitiarbpfendeq"><img width="135" alt="Das Spotify-Logo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/84/Spotify_icon.svg/512px-Spotify_icon.svg.png?20220821125323"></a></div>
   </div>
   
-  <p id="splash"></p>
+  
 
   <p class="hide">Gefunden!</p>
 
