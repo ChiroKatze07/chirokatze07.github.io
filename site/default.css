@@ -1,0 +1,57 @@
+html {
+      font-family: 'Figtree', sans-serif;
+      background-color: #1c1c1c;
+      color: white;
+    }
+
+    h1 {
+      font-size: 4rem;
+      font-weight: bolder;
+      margin: 0; 
+    }
+
+    #home-link {
+      text-decoration: none;
+      color: #00ffcc;
+    }
+
+    #home-link:visited {
+      text-decoration: none;
+      color: #00ffcc;
+    }
+    
+    hr {
+      border-top: 2px solid #bbb;
+      border-radius: 5px;
+      margin-left: 4rem;
+      margin-right: 4rem;
+    }
+
+    .top-hr {
+      margin-left: 2rem;
+    }
+
+    nav {
+      margin-left: 1.5rem;
+      margin-bottom: 0rem;
+      margin-top: -1.5rem;
+    }
+
+    nav ul li {
+      display: inline;
+      margin-right: 1rem;
+    }
+
+    nav ul li a {
+      color: white;
+    }
+
+    nav ul li a:visited {
+      color: white;
+    }
+    
+    h2 {
+      margin: 2rem;
+      margin-bottom: 0rem;
+      font-size: 1.8rem;
+    }
