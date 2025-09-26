@@ -201,7 +201,7 @@ async function loadRandomLine() {
     .split("")
     .map((char, i) => {
       if (char === " ") return " ";
-      const color = colors[i % colors.length]; // Farben im Kreis durchgehen
+      const color = colors[i % colors.length];
       return `<span style="color:${color}">${char}</span>`;
     })
     .join("");
