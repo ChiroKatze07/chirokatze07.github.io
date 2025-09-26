@@ -94,9 +94,11 @@
       align-items: center;
     }
 
-      .links > div:hover {
-          transform: translateY(10px);
-      }
+    .links > div:hover {
+
+      height: 155px;
+
+    }
 
     .hide {
       position: absolute;
@@ -120,13 +122,13 @@
       color: yellow;
       transform: rotate(-10deg) scale(1);
       position: absolute;
-      bottom: 0;       /* an der oberen Kante von h1 ansetzen */
-      right: 0;     /* an der rechten Kante von h1 ansetzen */
-      transform: translate(-60%, 40%) rotate(-10deg); /* Abstand justieren */
+      bottom: 0;
+      right: 0;
+      transform: translate(-60%, 40%) rotate(-10deg);
       animation: splash-size 2s infinite ease-in-out;
       font-size: 1rem;
       text-align: center;
-     white-space: nowrap; /* Splash bleibt in einer Zeile */
+     white-space: nowrap;
     }
 
     @keyframes splash-size {
@@ -157,29 +159,66 @@
     <div><a title="Mein BlueSky-Account" href="https://bsky.app/profile/chiro07.at"><img width="135" alt="Das BlueSky-Logo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7a/Bluesky_Logo.svg/512px-Bluesky_Logo.svg.png?20240211144739"></a></div>
     <div><a title="Ich auf Spotify (also meine Playlists)" href="https://open.spotify.com/user/314jdywqojzi5tbitiarbpfendeq"><img width="135" alt="Das Spotify-Logo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/84/Spotify_icon.svg/512px-Spotify_icon.svg.png?20220821125323"></a></div>
   </div>
+
+  
   
   
 
   <p class="hide">Gefunden!</p>
 
-   <script>
-    async function loadRandomLine() {
-      try {
-        const response = await fetch('/data/splashes.txt');
-        if (!response.ok) {
-          throw new Error("Splashes-Datei konnte nicht geladen werden :(");
-        }
-        const text = await response.text();
-        const lines = text.split(/\r?\n/).filter(line => line.trim() !== ""); 
-        const randomLine = lines[Math.floor(Math.random() * lines.length)];
-        document.getElementById("splash").textContent = randomLine;
-      } catch (error) {
-        console.error(error);
-        document.getElementById("splash").textContent = "konnte nicht geladen werden >:(";
-      }
+   <script> /* Splash-Texte, Quelle: "chiro07.at/data/splashes.txt" */
+async function loadRandomLine() {
+  try {
+    const response = await fetch('/data/splashes.txt');
+    if (!response.ok) {
+      throw new Error("Splashes-Datei konnte nicht geladen werden :(");
     }
 
-    loadRandomLine();
+    const text = await response.text();
+    const lines = text.split(/\r?\n/).filter(line => line.trim() !== ""); 
+    const randomLine = lines[Math.floor(Math.random() * lines.length)];
+    
+    const splashElement = document.getElementById("splash");
+    splashElement.textContent = randomLine;
+
+    const today = new Date();
+    const day = today.getDate();      
+    const month = today.getMonth() + 1;
+
+    splashElement.style.color = "";
+    splashElement.style.fontFamily = "";
+
+    // Spezialausnahmen
+    if (randomLine.includes("Hochmodern")) {
+      splashElement.style.color = "red";
+      splashElement.style.fontFamily = "Times New Roman, monospace";
+    } else if (randomLine.includes("Comic Sans")) {
+      splashElement.style.color = "green";
+      splashElement.style.fontFamily = "Comic Sans MS, cursive";
+    } else if (randomLine === "Bunt ist das neue Gelb!") {
+  const colors = ["red", "orange", "yellow", "green", "blue", "indigo", "violet"];
+  splashElement.innerHTML = randomLine
+    .split("")
+    .map((char, i) => {
+      if (char === " ") return " ";
+      const color = colors[i % colors.length]; // Farben im Kreis durchgehen
+      return `<span style="color:${color}">${char}</span>`;
+    })
+    .join("");
+  } else if (day == 26 && month == 9) {
+    document.getElementById("splash").textContent = "test-hallo-test";
+  }  else if (day == 1 && month == 1) {
+    document.getElementById("splash").textContent = "Schönes neues Jahr!";
+  }
+
+  } catch (error) {
+    console.error(error);
+    document.getElementById("splash").textContent = "konnte nicht geladen werden >:(";
+  }
+}
+
+loadRandomLine();
+
   </script>
 
 </body>
