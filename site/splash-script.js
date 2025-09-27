@@ -22,10 +22,8 @@ async function loadRandomLine() {
 
     // Spezialausnahmen
     if (randomLine.includes("Hochmodern")) {
-      splashElement.style.color = "red";
       splashElement.style.fontFamily = "Times New Roman, monospace";
     } else if (randomLine.includes("Comic Sans")) {
-      splashElement.style.color = "green";
       splashElement.style.fontFamily = "Comic Sans MS, cursive";
     } else if (randomLine === "Bunt ist das neue Gelb!") {
   const colors = ["red", "orange", "yellow", "green", "blue", "indigo", "violet"];
