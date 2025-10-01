@@ -39,6 +39,10 @@ async function loadRandomLine() {
     document.getElementById("splash").textContent = "Ich habe heute Geburtstag!!";
   }  else if (day == 1 && month == 1) {
     document.getElementById("splash").textContent = "Schönes neues Jahr!";
+  } else if (day == 1 && month == 10) {
+    document.getElementById("splash").textContent = "Happy Birthday Luis!";
+  } else if (day == 1 && month == 1) {
+    document.getElementById("splash").textContent = "Happy Birthday Chiro und Arthur!";
   }
 
   } catch (error) {
