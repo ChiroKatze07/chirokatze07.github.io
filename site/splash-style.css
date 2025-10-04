@@ -1,0 +1,26 @@
+#splash {
+            color: yellow;
+            transform: rotate(-10deg) scale(1);
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            transform: translate(-60%, 40%) rotate(-10deg);
+            animation: splash-size 2s infinite ease-in-out;
+            font-size: 1rem;
+            text-align: center;
+            white-space: nowrap;
+        }
+
+        @keyframes splash-size {
+            0% {
+                transform: translate(60%, 100%) rotate(-10deg) scale(1);
+            }
+
+            50% {
+                transform: translate(60%, 100%) rotate(-10deg) scale(1.2);
+            }
+
+            100% {
+                transform: translate(60%, 100%) rotate(-10deg) scale(1);
+            }
+        }

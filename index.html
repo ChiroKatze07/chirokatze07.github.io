@@ -9,6 +9,8 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet">
   <link rel="icon" href="/favicon.ico" type="image/vnd.microsoft.icon">
+  <script src="/site/splash-script.js"></script>
+  <style src="/site/splash-style.css"></style>
 </head>
 <body>
 
@@ -115,33 +117,6 @@
             cursor: pointer;
             text-decoration: underline;
         }
-
-        #splash {
-            color: yellow;
-            transform: rotate(-10deg) scale(1);
-            position: absolute;
-            bottom: 0;
-            right: 0;
-            transform: translate(-60%, 40%) rotate(-10deg);
-            animation: splash-size 2s infinite ease-in-out;
-            font-size: 1rem;
-            text-align: center;
-            white-space: nowrap;
-        }
-
-        @keyframes splash-size {
-            0% {
-                transform: translate(60%, 100%) rotate(-10deg) scale(1);
-            }
-
-            50% {
-                transform: translate(60%, 100%) rotate(-10deg) scale(1.2);
-            }
-
-            100% {
-                transform: translate(60%, 100%) rotate(-10deg) scale(1);
-            }
-        }
     </style>
 
     <div class="h1-splash">
@@ -166,13 +141,7 @@
         <div><a title="Ich auf Spotify (also meine Playlists)" href="https://open.spotify.com/user/314jdywqojzi5tbitiarbpfendeq"><img width="135" alt="Das Spotify-Logo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/84/Spotify_icon.svg/512px-Spotify_icon.svg.png?20220821125323"></a></div>
     </div>
 
-
-
-
-
     <p class="hide">Gefunden!</p>
-
-    <script src="/site/splash-script.js"></script>
 
 </body>
 </html>
