@@ -1,40 +1,40 @@
 
 @font-face {
     font-family: "Figtree";
-    src: url(/site/fonts/Figtree.woff2) format("woff2-variations"),
-         url(/site/fonts/Figtree-VariableFont_wght.ttf) format("truetype-variations");
+    src: url(/site/fonts/Figtree-VariableFont_wght.ttf) format("truetype-variations");
     font-weight: 100 900;
     font-style: normal;
+    font-display: swap;
 }
 
 @font-face {
     font-family: "Figtree-Italic";
-    src: url(/site/fonts/Figtree-Italic.woff2) format("woff2-variations"),
-         url(/site/fonts/Figtree-Italic-VariableFont_wght.ttf) format("truetype-variations");
+    src: url(/site/fonts/Figtree-Italic-VariableFont_wght.ttf) format("truetype-variations");
     font-weight: 100 900;
     font-style: normal;
+    font-display: swap;
 }
 
 @font-face {
     font-family: "Honk";
-    src: url(/site/fonts/Honk.woff2) format("woff2-variations"),
-         url(/site/fonts/Honk-Regular-VariableFont_MORF,SHLN.ttf) format("truetype-variations");
+    src: url(/site/fonts/Honk-Regular-VariableFont_MORF,SHLN.ttf) format("truetype-variations");
     font-weight: 100 900;
     font-style: normal;
+    font-display: swap;
 }
 
 @font-face {
     font-family: "Savate";
-    src: url(/site/fonts/Savate.woff2) format("woff2-variations"),
-         url(/site/fonts/Savate-VariableFont_wght.ttf) format("truetype-variations");
+    src: url(/site/fonts/Savate-VariableFont_wght.ttf) format("truetype-variations");
     font-weight: 100 900;
     font-style: normal;
+    font-display: swap;
 }
 
 @font-face {
     font-family: "Savate-Italic";
-    src: url(/site/fonts/Savate-Italic.woff2) format("woff2-variations"),
-         url(/site/fonts/Savate-Italic-VariableFont_wght.ttf) format("truetype-variations");
+    src: url(/site/fonts/Savate-Italic-VariableFont_wght.ttf) format("truetype-variations");
     font-weight: 100 900;
     font-style: normal;
+    font-display: swap;
 }
