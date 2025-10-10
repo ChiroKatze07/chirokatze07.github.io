@@ -1,0 +1,24 @@
+@font-face {
+    font-family: "Figtree";
+    src: url(fonts/Figtree-VariableFont_wght.ttf) format("truetype")
+}
+
+@font-face {
+    font-family: "Figtree-Italic";
+    src: url(fonts/Figtree-Italic-VariableFont_wght.ttf) format("truetype")
+}
+
+@font-face {
+    font-family: "Honk";
+    src: url(fonts/Honk-Regular-VariableFont_MORF,SHLN.ttf) format("truetype")
+}
+
+@font-face {
+    font-family: "Savate";
+    src: url(fonts/Savate-VariableFont_wght.ttf) format("truetype")
+}
+
+@font-face {
+    font-family: "Savate-Italic";
+    src: url(fonts/Savate-Italic-VariableFont_wght.ttf) format("truetype")
+}
