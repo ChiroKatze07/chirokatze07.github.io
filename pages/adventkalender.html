@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Adventkalender</title>
+    <link rel="stylesheet" href="\site\font-faces.css">
+    <link rel="icon" href="/favicon.ico" type="image/vnd.microsoft.icon">
+    <script src="/site/splash-script.js"></script>
+    <link rel="stylesheet" href="\site\splash-style.css">
+    <link rel="stylesheet" href="\site\default.css">
+</head>
+<body>
+        <style>
+    html {
+        font-family: 'Figtree', sans-serif;
+        background-color: #1c1c1c;
+        color: white
+        }
+
+        h1 {
+        font-size: 48px;
+        font-weight: bolder;
+        font-size: 4rem;
+        margin: 2rem;
+        
+        }
+
+        #home-link {
+        text-decoration: none;
+        color: #00ffcc;
+        }
+
+        #home-link:visited {
+        text-decoration: none;
+        color: #00ffcc;
+        }
+
+        hr {
+        border-top: 2px solid #bbb;
+        border-radius: 5px;
+        margin-left: 4rem;
+        margin-right: 4rem;
+        }
+
+        .top-hr {
+        margin-left: 2rem;
+        }
+
+        nav {
+        margin-left: 1.5rem;
+        margin-bottom: 0rem;
+        margin-top: -1.5rem;
+        }
+
+        nav ul li {
+        display: inline;
+        margin-right: 1rem;
+        }
+
+        nav ul li a {
+        color: white;
+        }
+
+        nav ul li a:visited {
+        color: white;
+        }
+
+        h2 {
+        margin: 2rem;
+        margin-bottom: 0rem;
+        font-size: 1.8rem;
+        }
+
+        p {
+        margin-left: 2rem;
+        font-size: 1.2rem;
+        }
+
+        .p-inline {
+        display: inline;
+        margin: 0rem;
+        }
+
+        .adventkalender {
+            display: flex;
+        }
+
+        .tag {
+            background: #d10000;
+            background: linear-gradient(50deg,rgba(209, 0, 0, 1) 0%, rgb(255, 122, 51) 100%);
+            width: 14rem;
+            height: 14rem;
+            margin: 2rem;
+            border-radius: 2rem;
+            align-content: flex-start;
+        }
+
+        .tag > h2 {
+            font-size: 5rem;
+            text-align: center;
+            font-weight: 900;
+            margin-top: 3rem;
+        }
+
+        #month {
+            font-style: italic;
+            font-weight: 500;
+            text-align: center;
+            margin-top: -0.8rem;
+        }
+
+        #musikueberschrift {
+            font-size: 1.3rem;
+            margin-top: 2rem;
+            text-align: center;
+            top: 10%;
+        }
+
+        #musik-des-tages {
+            font-size: 1rem;
+            font-style: italic;
+            text-align: center;
+        }
+
+        .box {
+            outline-color:#d10000;
+            outline-style: solid;
+            width: 14rem;
+            height: 14rem;
+            border-radius: 2rem;
+        }
+
+    </style>
+
+
+    <h1><a href="https://www.chiro07.at" id="home-link">ChirHo ho ho!</a></h1>
+
+        <nav>
+        <ul>
+            <li><a href="https://www.chiro07.at" >Home</a></li>
+            <li><a href="https://www.chiro07.at/ueber" style="font-style: italic;">Über</a></li>
+        </ul>
+        </nav>
+        <hr class="top-hr">
+
+        <div class="adventkalender">
+            <div class="tag">
+                <h2 id="date">14.</h2>
+                <h3 id="month">Dezember</h3>
+            </div>
+
+            <div class="today">
+                <div class="box">
+                    <div class="music">
+                        <h3 id="musikueberschrift">♫ Musik des Tages:</h3>
+                        <p id="musik-des-tages">Map (Christmas)teletexttesttext</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+
+        <script>
+            // Get the current time
+            const currentTime = new Date();
+
+            const currentDay = currentTime.getDate();
+            const currentMonth = currentTime.getMonth()
+
+            // Get the date element using its id
+            const dateElement = document.getElementById('date');
+            const monthElement = document.getElementById('month');
+
+            switch (currentMonth) {
+                case 0:
+                    monthElement.innerHTML = "Jänner";
+                    break;
+
+                case 1:
+                    monthElement.innerHTML = "Feber";
+                    break;
+
+                case 2:
+                    monthElement.innerHTML = "März";
+                    break;
+
+                case 3:
+                    monthElement.innerHTML = "April";
+                    break;
+
+                case 4:
+                    monthElement.innerHTML = "Mai";
+                    break;
+
+                case 5:
+                    monthElement.innerHTML = "Juni";
+                    break;
+
+                case 6:
+                    monthElement.innerHTML = "Juli";
+                    break;
+
+                case 7:
+                    monthElement.innerHTML = "August";
+                    break;
+
+                case 8:
+                    monthElement.innerHTML = "September";
+                    break;
+
+                case 9:
+                    monthElement.innerHTML = "Oktober";
+                    break;
+
+                case 10:
+                    monthElement.innerHTML = "November";
+                    break;
+                    
+                case 11:
+                    monthElement.innerHTML = "Dezember";
+                    break;
+            }
+
+            // Replace the innerHTML with the current time
+            dateElement.innerHTML = currentDay + ".";
+        </script>
+</body>
+</html>
