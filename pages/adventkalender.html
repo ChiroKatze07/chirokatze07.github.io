@@ -89,18 +89,19 @@
         .tag {
             background: #d10000;
             background: linear-gradient(50deg,rgba(209, 0, 0, 1) 0%, rgb(255, 122, 51) 100%);
-            width: 14rem;
-            height: 14rem;
+            width: 13rem;
+            height: 13rem;
             margin: 2rem;
             border-radius: 2rem;
             align-content: flex-start;
+            padding: 1rem;
         }
 
         .tag > h2 {
             font-size: 5rem;
             text-align: center;
             font-weight: 900;
-            margin-top: 3rem;
+            margin-top: 2.5rem;
         }
 
         #month {
@@ -110,25 +111,36 @@
             margin-top: -0.8rem;
         }
 
-        #musikueberschrift {
+        h3 {
             font-size: 1.3rem;
+            text-anchor: middle;
             margin-top: 2rem;
             text-align: center;
             top: 10%;
         }
 
-        #musik-des-tages {
+        p {
             font-size: 1rem;
             font-style: italic;
             text-align: center;
+            margin-left: -0.5rem;
+            text-overflow: ellipsis;
         }
 
         .box {
             outline-color:#d10000;
             outline-style: solid;
-            width: 14rem;
-            height: 14rem;
+            width: 13rem;
+            height: 13rem;
+            margin: 2rem;
+            margin-left: 0rem;
             border-radius: 2rem;
+            padding: 1rem;
+            align-content: flex-start;
+        }
+
+        .today {
+            display: flex;
         }
 
     </style>
@@ -139,7 +151,7 @@
         <nav>
         <ul>
             <li><a href="https://www.chiro07.at" >Home</a></li>
-            <li><a href="https://www.chiro07.at/ueber" style="font-style: italic;">Über</a></li>
+            <li><a href="https://www.chiro07.at/ueber">Über</a></li>
         </ul>
         </nav>
         <hr class="top-hr">
@@ -151,17 +163,27 @@
             </div>
 
             <div class="today">
+
                 <div class="box">
                     <div class="music">
                         <h3 id="musikueberschrift">♫ Musik des Tages:</h3>
-                        <p id="musik-des-tages">Map (Christmas)teletexttesttext</p>
+                        <p id="day-music">###</p>
                     </div>
                 </div>
+
+                <div class="box">
+                    <div class="fact">
+                        <h3>"Fun" Fact:</h3>
+                        <p id="day-fact">###</p>
+                    </div>
+                </div>
+
             </div>
         </div>
         
 
         <script>
+            // TAG
             // Get the current time
             const currentTime = new Date();
 
@@ -224,6 +246,59 @@
 
             // Replace the innerHTML with the current time
             dateElement.innerHTML = currentDay + ".";
+
+            const today = new Date().getDate(); 
+            const month = new Date().getMonth()
+
+            // MUSIK
+            fetch('/data/adventkalender/musik.json')
+            .then(response => {
+                if (!response.ok) {
+                throw new Error('Fehler beim Laden der JSON-Datei');
+                }
+                return response.json();
+            })
+            .then(data => {
+
+                if (month == 12) {
+                    const fact = data[today.toString()] || "es wurde nichts gefunden >:()";
+
+                    document.getElementById('day-music').textContent = fact;
+                }
+                else {
+                    document.getElementById('day-music').textContent = "Es ist noch nicht Dezember";
+                }
+                
+            })
+            .catch(error => {
+                console.error(error);
+                document.getElementById('day-music').textContent = "Fehler beim Laden der Daten.";
+            });
+
+            // FACT
+            fetch('/data/adventkalender/fact.json')
+            .then(response => {
+                if (!response.ok) {
+                throw new Error('Fehler beim Laden der JSON-Datei');
+                }
+                return response.json();
+            })
+            .then(data => {
+
+                if (month == 12) {
+                    const fact = data[today.toString()] || "es wurde nichts gefunden >:()";
+
+                    document.getElementById('day-fact').textContent = fact;
+                }
+                else {
+                    document.getElementById('day-fact').textContent = "Es ist noch nicht Dezember";
+                }
+                
+            })
+            .catch(error => {
+                console.error(error);
+                document.getElementById('day-fact').textContent = "Fehler beim Laden der Daten.";
+            });
         </script>
 </body>
 </html>
