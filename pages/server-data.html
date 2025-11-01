@@ -59,8 +59,8 @@
     <h3>Status:</h3>
     <div class="mono" id="status"><p>Wird geladen...</p></div>
 
-    <h3>Auslastung:</h3>
-    <div class="mono" id="auslastung-ram"><p>RAM: ...</p></div>
+    <h3>Version:</h3>
+    <div class="mono" id="version"><p>...</p></div>
 
     <h3>Spieler:</h3>
     <div class="mono" id="spieler"><p>...</p></div>
@@ -81,20 +81,6 @@
                 const server = serverResult.data;
                 if (!server) throw new Error("Keine Serverdaten empfangen");
 
-                const ramRes = await fetch(`${PROXY_URL}/api/server/${SERVER_ID}/options/ram`);
-                let ramOption = {};
-                if (ramRes.ok) {
-                    const ramResult = await ramRes.json();
-                    ramOption = ramResult.data || {};
-                }
-
-                const motdRes = await fetch(`${PROXY_URL}/api/server/${SERVER_ID}/options/motd`);
-                let motdOption = {};
-                if (motdRes.ok) {
-                    const motdResult = await motdRes.json();
-                    motdOption = motdResult.data || {};
-                }
-
                 // === Anzeige aktualisieren ===
                 const statusNamen = [
                     "Offline", "Online", "Starting", "Stopping",
@@ -103,13 +89,14 @@
                 const statusText = statusNamen[server.status] || "Unbekannt";
                 document.querySelector("#status p").textContent = statusText;
 
-                // RAM
-                const ramMB = ramOption.value ?? server.ram ?? "Unbekannt";
-                document.querySelector("#auslastung-ram p").textContent =
-                    `RAM: ${ramMB} MB`;
+                // Version
+                const ver = server.software.version
+                const vertype = server.software.name ?? "Unbekannt";
+                document.querySelector("#version p").textContent =
+                    `${vertype} ${ver}`;
 
                 // MOTD
-                const motd = motdOption.value || "(keine MOTD gesetzt)";
+                const motd = server.motd || "(keine MOTD gesetzt)";
                 document.querySelector("#motd p").textContent = motd;
 
                 // Spieler
