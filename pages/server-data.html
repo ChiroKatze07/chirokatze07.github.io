@@ -1,19 +1,16 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="de">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Minecraft-Server-Daten</title>
-    <link rel="stylesheet" href="\site\font-faces.css">
+    <link rel="stylesheet" href="/site/font-faces.css">
     <link rel="icon" href="/favicon.ico" type="image/vnd.microsoft.icon">
-</head>
-<body>
-
     <style>
         html {
-          font-family: Figtree, sans-serif;
-          padding: 2.5rem;
-          background-color: #1c1c1c;
+            font-family: Figtree, sans-serif;
+            padding: 2.5rem;
+            background-color: #1c1c1c;
         }
 
         h1 {
@@ -24,6 +21,7 @@
         h3 {
             color: #00ffcc;
             font-size: 1.8rem;
+            margin-top: 2rem;
         }
 
         .mono {
@@ -34,47 +32,66 @@
         .mono > p {
             background-color: #101010;
             border-radius: 0.3rem;
-            padding-left: 0.3rem;
+            padding: 0.3rem 0.5rem;
             font-size: 1rem;
         }
 
-    </style>
+        #zeit {
+            margin-top: 2rem;
+            color: #aaa;
+            font-size: 0.9rem;
+        }
 
+        .error {
+            color: #ff5555;
+        }
+    </style>
+</head>
+<body>
     <h1>Minecraft-Server-Daten</h1>
-    <div class="mono" id="server"><p style="font-size: 2rem;">mc.chiro07.at (chiro.exaroton.me)</p></div>
+    <div class="mono" id="server"><p style="font-size: 2rem;">server.exaroton.me</p></div>
 
     <hr>
 
     <h3>Status:</h3>
-    <div class="mono" id="status"><p>Daten werden geladen...</p></div>
+    <div class="mono" id="status"><p>Wird geladen...</p></div>
 
     <h3>Auslastung:</h3>
-    <div class="mono" id="auslastung-ram"><p>RAM: ... </p></div>
-    <div class="mono" id="auslastung-cpu"><p>CPU: ... </p></div>
+    <div class="mono" id="auslastung-ram"><p>RAM: ...</p></div>
+    <div class="mono" id="auslastung-cpu"><p>CPU: ...</p></div>
 
     <h3>Credits:</h3>
-    <div class="mono" id="credits"><p> ... </p></div>
+    <div class="mono" id="credits"><p>...</p></div>
 
     <h3>Spieler:</h3>
-    <div class="mono" id="spieler"><p> ... </p></div>
+    <div class="mono" id="spieler"><p>...</p></div>
+
+    <div id="zeit">Zuletzt aktualisiert um: --:--:--</div>
 
     <script>
-        const SERVER_ID = "EINWOhDy9hlZc31U";
-        const PROXY_URL = "https://exaroton-proxy.onrender.com"
-
-        const API_URL = `${PROXY_URL}/api/server/${SERVER_ID}`;
-        const UPDATE_INTERVAL = 10000; 
+        // === Einstellungen ===
+        const SERVER_ID = "DEIN_SERVER_ID_HIER"; // z. B. "abc123def4567890"
+        const PROXY_URL = "https://DEIN-RENDER-NAME.onrender.com"; // deine Render-URL
+        const UPDATE_INTERVAL = 10000; // 10 Sekunden
 
         async function ladeServerDaten() {
             try {
-                const response = await fetch(API_URL);
-                if (!response.ok) throw new Error(`HTTP ${response.status}`);
-                const result = await response.json();
+                // --- 1️⃣ Grunddaten (Status, Spieler, Credits etc.) ---
+                const serverRes = await fetch(`${PROXY_URL}/api/server/${SERVER_ID}`);
+                if (!serverRes.ok) throw new Error(`Serverdaten HTTP ${serverRes.status}`);
+                const serverResult = await serverRes.json();
+                const server = serverResult.data;
+                if (!server) throw new Error("Keine Serverdaten empfangen");
 
-                const server = result.data;
-                if (!server) throw new Error("Keine Daten empfangen");
+                // --- 2️⃣ Performance-Daten (RAM/CPU) ---
+                const perfRes = await fetch(`${PROXY_URL}/api/server/${SERVER_ID}/performance`);
+                let perf = {};
+                if (perfRes.ok) {
+                    const perfResult = await perfRes.json();
+                    perf = perfResult.data || {};
+                }
 
-                // Status
+                // === Anzeige aktualisieren ===
                 const statusNamen = [
                     "Offline", "Online", "Starting", "Stopping",
                     "Restarting", "Saving", "Loading", "Crashed", "Preparing"
@@ -83,32 +100,42 @@
                 document.querySelector("#status p").textContent = statusText;
 
                 // RAM
-                const ramUsed = server.ramUsage ?? 0;
+                const ramUsed = perf.memory?.used ?? 0;
                 const ramMax = server.ram ?? 0;
-                const ramPercent = ramMax ? ((ramUsed / ramMax) * 100).toFixed(0) : 0;
-                document.querySelector("#auslastung-ram p").textContent = `RAM: ${ramPercent}% von ${ramMax} MB`;
+                const ramPercent = ramMax ? ((ramUsed / (ramMax * 1024 * 1024)) * 100).toFixed(0) : 0;
+                document.querySelector("#auslastung-ram p").textContent =
+                    `RAM: ${ramPercent}% von ${ramMax} MB`;
 
                 // CPU
-                const cpuUsed = server.cpuUsage ?? 0;
-                document.querySelector("#auslastung-cpu p").textContent = `CPU: ${cpuUsed.toFixed(0)}%`;
+                const cpuUsed = perf.cpu?.usage ?? 0;
+                document.querySelector("#auslastung-cpu p").textContent =
+                    `CPU: ${cpuUsed.toFixed(0)}%`;
 
                 // Credits
                 const credits = server.credits ?? "Unbekannt";
-                document.querySelector("#credits p").textContent = `${credits} Credits verfügbar`;
+                document.querySelector("#credits p").textContent =
+                    `${credits} Credits verfügbar`;
 
                 // Spieler
                 const players = server.players?.list ?? [];
-                document.querySelector("#spieler p").innerHTML = players.length > 0
-                    ? players.join("<br>")
-                    : "Keine Spieler online";
-            } catch (error) {
-                console.error("Fehler:", error);
+                document.querySelector("#spieler p").innerHTML =
+                    players.length > 0 ? players.join("<br>") : "Keine Spieler online";
+
+                // Zeit
+                const jetzt = new Date();
+                const hh = String(jetzt.getHours()).padStart(2, "0");
+                const mm = String(jetzt.getMinutes()).padStart(2, "0");
+                const ss = String(jetzt.getSeconds()).padStart(2, "0");
+                document.querySelector("#zeit").textContent =
+                    `Zuletzt aktualisiert um: ${hh}:${mm}:${ss}`;
+            } catch (err) {
+                console.error("Fehler:", err);
                 document.querySelector("#status p").textContent = "Fehler beim Laden";
                 document.querySelector("#status p").classList.add("error");
             }
         }
 
-        // Beim Laden sofort ausführen
+        // Beim Laden sofort abrufen
         ladeServerDaten();
 
         // Regelmäßig aktualisieren
