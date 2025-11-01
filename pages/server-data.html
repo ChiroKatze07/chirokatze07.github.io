@@ -41,12 +41,12 @@
     </style>
 
     <h1>Minecraft-Server-Daten</h1>
-    <div class="mono" id="server"><p style="font-size: 2rem;"> ... </p></div>
+    <div class="mono" id="server"><p style="font-size: 2rem;">chiro.exaroton.me</p></div>
 
     <hr>
 
     <h3>Status:</h3>
-    <div class="mono" id="status"><p>ONLINE</p></div>
+    <div class="mono" id="status"><p>Daten werden geladen...</p></div>
 
     <h3>Auslastung:</h3>
     <div class="mono" id="auslastung-ram"><p>RAM: ... </p></div>
@@ -60,37 +60,35 @@
 
     <script>
         const SERVER_ID = "EINWOhDy9hlZc31U";
-        const API_URL = `https://exaroton-proxy.onrender.com/api/server/${SERVER_ID}`;
+        const PROXY_URL = "https://exaroton-proxy.onrender.com"
 
-        async function getServerData() {
+        const API_URL = `${PROXY_URL}/api/server/${SERVER_ID}`;
+        const UPDATE_INTERVAL = 10000; 
+
+        async function ladeServerDaten() {
             try {
-                const response = await fetch(API_URL, {
-                    headers: {
-                        "Authorization": `Bearer ${API_KEY}`,
-                        "Content-Type": "application/json"
-                    }
-                });
-
+                const response = await fetch(API_URL);
                 if (!response.ok) throw new Error(`HTTP ${response.status}`);
-                const data = await response.json();
+                const result = await response.json();
 
-                if (!data || !data.data) throw new Error("Keine Serverdaten erhalten.");
+                const server = result.data;
+                if (!server) throw new Error("Keine Daten empfangen");
 
-                const server = data.data;
-
-                // Status aktualisieren
-                const statusNames = [
+                // Status
+                const statusNamen = [
                     "Offline", "Online", "Starting", "Stopping",
                     "Restarting", "Saving", "Loading", "Crashed", "Preparing"
                 ];
-                document.querySelector("#status p").textContent = statusNames[server.status] || "Unbekannt";
+                const statusText = statusNamen[server.status] || "Unbekannt";
+                document.querySelector("#status p").textContent = statusText;
 
-                // Ressourcen (RAM/CPU)
+                // RAM
                 const ramUsed = server.ramUsage ?? 0;
                 const ramMax = server.ram ?? 0;
                 const ramPercent = ramMax ? ((ramUsed / ramMax) * 100).toFixed(0) : 0;
                 document.querySelector("#auslastung-ram p").textContent = `RAM: ${ramPercent}% von ${ramMax} MB`;
 
+                // CPU
                 const cpuUsed = server.cpuUsage ?? 0;
                 document.querySelector("#auslastung-cpu p").textContent = `CPU: ${cpuUsed.toFixed(0)}%`;
 
@@ -103,18 +101,18 @@
                 document.querySelector("#spieler p").innerHTML = players.length > 0
                     ? players.join("<br>")
                     : "Keine Spieler online";
-
             } catch (error) {
-                console.error("Fehler beim Abrufen der Serverdaten:", error);
+                console.error("Fehler:", error);
                 document.querySelector("#status p").textContent = "Fehler beim Laden";
+                document.querySelector("#status p").classList.add("error");
             }
         }
 
-        // beim Laden einmal abrufen
-        getServerData();
+        // Beim Laden sofort ausführen
+        ladeServerDaten();
 
-        // alle 10 Sekunden automatisch aktualisieren
-        setInterval(getServerData, 10000);
+        // Regelmäßig aktualisieren
+        setInterval(ladeServerDaten, UPDATE_INTERVAL);
     </script>
 </body>
 </html>
