@@ -41,7 +41,7 @@
     </style>
 
     <h1>Minecraft-Server-Daten</h1>
-    <div class="mono" id="server"><p style="font-size: 2rem;">server.exaroton.me</p></div>
+    <div class="mono" id="server"><p style="font-size: 2rem;"> ... </p></div>
 
     <hr>
 
@@ -49,19 +49,17 @@
     <div class="mono" id="status"><p>ONLINE</p></div>
 
     <h3>Auslastung:</h3>
-    <div class="mono" id="auslastung-ram"><p>RAM: 50% von 4000 MB</p></div>
-    <div class="mono" id="auslastung-cpu"><p>CPU: 70% von 2 Kernen</p></div>
+    <div class="mono" id="auslastung-ram"><p>RAM: ... </p></div>
+    <div class="mono" id="auslastung-cpu"><p>CPU: ... </p></div>
 
     <h3>Credits:</h3>
-    <div class="mono" id="credits"><p>400 Credits = 100 Spielstunden</p></div>
+    <div class="mono" id="credits"><p> ... </p></div>
 
     <h3>Spieler:</h3>
-    <div class="mono" id="spieler"><p>Spieler1<br>Spieler2<br>Spieler3</p></div>
+    <div class="mono" id="spieler"><p> ... </p></div>
 
     <script>
-        const API_KEY = "ODlFVGIBTBwFc3kdcYDqqHy2qZtN2v6zQpUZYN6aUrTET7dRbvcFsC0yJ6zaQ0mxR6Vr6kygUXs4gwaeR41K5bzcrOgkzp9mJxW6";
-        const SERVER_ID = "EINWOhDy9hlZc31U"; // z. B. "abc123def4567890"
-        const API_URL = `https://api.exaroton.com/v1/server/${SERVER_ID}`;
+        const API_URL = `https://exaroton-proxy.onrender.com/api/server/${SERVER_ID}`;
 
         async function getServerData() {
             try {
