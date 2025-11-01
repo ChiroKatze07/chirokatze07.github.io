@@ -70,28 +70,24 @@
 
     <script>
         // === Einstellungen ===
-        const SERVER_ID = "DEIN_SERVER_ID_HIER"; // z. B. "abc123def4567890"
-        const PROXY_URL = "https://DEIN-RENDER-NAME.onrender.com"; // deine Render-URL
-        const UPDATE_INTERVAL = 10000; // 10 Sekunden
+        const SERVER_ID = "EINWOhDy9hlZc31U";
+        const PROXY_URL = "https://exaroton-proxy.onrender.com"
+        const UPDATE_INTERVAL = 10000;
 
         async function ladeServerDaten() {
             try {
-                // --- 1️⃣ Grunddaten (Status, Spieler, Credits etc.) ---
                 const serverRes = await fetch(`${PROXY_URL}/api/server/${SERVER_ID}`);
                 if (!serverRes.ok) throw new Error(`Serverdaten HTTP ${serverRes.status}`);
                 const serverResult = await serverRes.json();
                 const server = serverResult.data;
                 if (!server) throw new Error("Keine Serverdaten empfangen");
 
-                // --- 2️⃣ Performance-Daten (RAM/CPU) ---
                 const perfRes = await fetch(`${PROXY_URL}/api/server/${SERVER_ID}/performance`);
                 let perf = {};
                 if (perfRes.ok) {
                     const perfResult = await perfRes.json();
                     perf = perfResult.data || {};
                 }
-
-                // === Anzeige aktualisieren ===
                 const statusNamen = [
                     "Offline", "Online", "Starting", "Stopping",
                     "Restarting", "Saving", "Loading", "Crashed", "Preparing"
@@ -135,10 +131,8 @@
             }
         }
 
-        // Beim Laden sofort abrufen
         ladeServerDaten();
-
-        // Regelmäßig aktualisieren
+        
         setInterval(ladeServerDaten, UPDATE_INTERVAL);
     </script>
 </body>
