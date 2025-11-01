@@ -145,7 +145,7 @@
 
                 // MOTD
                 const motd = server.motd || "(keine MOTD gesetzt)";
-                document.querySelector("#motd p").textContent = motd;
+                document.querySelector("#motd p").innerHTML = parseMotd(motd);
 
                 // Spieler
                 const players = server.players?.list ?? [];
