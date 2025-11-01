@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minecraft-Server-Daten</title>
+    <link rel="stylesheet" href="\site\font-faces.css">
+    <link rel="icon" href="/favicon.ico" type="image/vnd.microsoft.icon">
+</head>
+<body>
+
+    <style>
+        html {
+          font-family: Figtree, sans-serif;
+          padding: 2.5rem;
+          background-color: #1c1c1c;
+        }
+
+        h1 {
+            color: #00ffcc;
+            font-size: 3rem;
+        }
+
+        h3 {
+            color: #00ffcc;
+            font-size: 1.8rem;
+        }
+
+        .mono {
+            font-family: Mono, monospace;
+            color: whitesmoke;
+        }
+
+        .mono > p {
+            background-color: #101010;
+            border-radius: 0.3rem;
+            padding-left: 0.3rem;
+            font-size: 1rem;
+        }
+
+    </style>
+
+    <h1>Minecraft-Server-Daten</h1>
+    <div class="mono" id="server"><p style="font-size: 2rem;">server.exaroton.me</p></div>
+
+    <hr>
+
+    <h3>Status:</h3>
+    <div class="mono" id="status"><p>ONLINE</p></div>
+
+    <h3>Auslastung:</h3>
+    <div class="mono" id="auslastung-ram"><p>RAM: 50% von 4000 MB</p></div>
+    <div class="mono" id="auslastung-cpu"><p>CPU: 70% von 2 Kernen</p></div>
+
+    <h3>Credits:</h3>
+    <div class="mono" id="credits"><p>400 Credits = 100 Spielstunden</p></div>
+
+    <h3>Spieler:</h3>
+    <div class="mono" id="spieler"><p>Spieler1<br>Spieler2<br>Spieler3</p></div>
+
+    <script>
+        const API_KEY = "ODlFVGIBTBwFc3kdcYDqqHy2qZtN2v6zQpUZYN6aUrTET7dRbvcFsC0yJ6zaQ0mxR6Vr6kygUXs4gwaeR41K5bzcrOgkzp9mJxW6";
+        const SERVER_ID = "YOUR_SERVER_ID_HERE"; // z. B. "abc123def4567890"
+        const API_URL = `https://api.exaroton.com/v1/server/${SERVER_ID}`;
+
+        async function getServerData() {
+            try {
+                const response = await fetch(API_URL, {
+                    headers: {
+                        "Authorization": `Bearer ${API_KEY}`,
+                        "Content-Type": "application/json"
+                    }
+                });
+
+                if (!response.ok) throw new Error(`HTTP ${response.status}`);
+                const data = await response.json();
+
+                if (!data || !data.data) throw new Error("Keine Serverdaten erhalten.");
+
+                const server = data.data;
+
+                // Status aktualisieren
+                const statusNames = [
+                    "Offline", "Online", "Starting", "Stopping",
+                    "Restarting", "Saving", "Loading", "Crashed", "Preparing"
+                ];
+                document.querySelector("#status p").textContent = statusNames[server.status] || "Unbekannt";
+
+                // Ressourcen (RAM/CPU)
+                const ramUsed = server.ramUsage ?? 0;
+                const ramMax = server.ram ?? 0;
+                const ramPercent = ramMax ? ((ramUsed / ramMax) * 100).toFixed(0) : 0;
+                document.querySelector("#auslastung-ram p").textContent = `RAM: ${ramPercent}% von ${ramMax} MB`;
+
+                const cpuUsed = server.cpuUsage ?? 0;
+                document.querySelector("#auslastung-cpu p").textContent = `CPU: ${cpuUsed.toFixed(0)}%`;
+
+                // Credits
+                const credits = server.credits ?? "Unbekannt";
+                document.querySelector("#credits p").textContent = `${credits} Credits verfügbar`;
+
+                // Spieler
+                const players = server.players?.list ?? [];
+                document.querySelector("#spieler p").innerHTML = players.length > 0
+                    ? players.join("<br>")
+                    : "Keine Spieler online";
+
+            } catch (error) {
+                console.error("Fehler beim Abrufen der Serverdaten:", error);
+                document.querySelector("#status p").textContent = "Fehler beim Laden";
+            }
+        }
+
+        // beim Laden einmal abrufen
+        getServerData();
+
+        // alle 10 Sekunden automatisch aktualisieren
+        setInterval(getServerData, 10000);
+    </script>
+</body>
+</html>
