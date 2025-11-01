@@ -73,6 +73,54 @@
         const PROXY_URL = "https://exaroton-proxy.onrender.com";
         const UPDATE_INTERVAL = 10000; 
 
+        function parseMotd(motd) {
+            if (!motd) return "";
+            const colorMap = {
+                "0": "#000000", "1": "#0000AA", "2": "#00AA00", "3": "#00AAAA",
+                "4": "#AA0000", "5": "#AA00AA", "6": "#FFAA00", "7": "#AAAAAA",
+                "8": "#555555", "9": "#5555FF", "a": "#55FF55", "b": "#55FFFF",
+                "c": "#FF5555", "d": "#FF55FF", "e": "#FFFF55", "f": "#FFFFFF"
+            };
+
+            let result = "";
+            let openTags = [];
+            motd = motd.replace(/\\n/g, "\n"); // escaped newline fix
+
+            for (let i = 0; i < motd.length; i++) {
+                if (motd[i] === "§" && i + 1 < motd.length) {
+                    const code = motd[++i].toLowerCase();
+
+                    if (colorMap[code]) {
+                        // Farbe ändern → vorherige schließen
+                        result += "</span>";
+                        result += `<span style="color:${colorMap[code]}">`;
+                        continue;
+                    }
+
+                    switch (code) {
+                        case "l": result += "<b>"; openTags.push("</b>"); break;
+                        case "n": result += "<u>"; openTags.push("</u>"); break;
+                        case "o": result += "<i>"; openTags.push("</i>"); break;
+                        case "m": result += "<s>"; openTags.push("</s>"); break;
+                        case "k": result = "#"; openTags.push(""); break; // '#' statt obfuscated
+                        case "r":
+                            // Reset: alle offenen Tags schließen
+                            while (openTags.length) result += openTags.pop();
+                            result += "</span><span style='color:#FFFFFF'>";
+                            break;
+                    }
+                } else if (motd[i] === "\n") {
+                    result += "<br>";
+                } else {
+                    result += motd[i];
+                }
+            }
+
+            // offene Tags schließen
+            while (openTags.length) result += openTags.pop();
+            return `<span style="color:#FFFFFF">${result}</span>`;
+        }
+
         async function ladeServerDaten() {
             try {
                 const serverRes = await fetch(`${PROXY_URL}/api/server/${SERVER_ID}`);
