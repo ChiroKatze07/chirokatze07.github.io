@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hasenzeit</title>
+</head>
+<body>
+
+    <style>
+        
+        .uhr {
+            position: absolute;
+            top: 0;
+            left: 0;
+
+            height: 700px;
+        }
+
+        #minuten {
+            position: absolute;
+            top: 270px;
+            left: 400px;
+            transform-origin: 3px 54px;
+        }
+
+        #stunden {
+            position: absolute;
+            left: 374px;
+            top: 322px;
+            transform-origin: 30px 3px;
+        }
+
+        #sekunden {
+            position: absolute;
+            left: 394px;
+            top: 350px;
+            transform-origin: 11px 9px;
+        }
+
+        #sync {
+            position: absolute;
+            top: 710px;
+        }
+
+        #stop {
+            position: absolute;
+            top: 750px;
+        }
+
+        #inputzeit {
+            position: absolute;
+            top: 790px;
+        }
+
+    </style>
+
+    <div class="uhr">
+        <img src="../media/hase/hase-background.png" id="background">
+        <img src="../media/hase/hase-sekunden.png" id="sekunden">
+        <img src="../media/hase/hase-stunde.png" id="stunden">
+        <img src="../media/hase/hase-minuten.png" id="minuten">
+    </div>
+
+    <button onclick="setInterval(updateClock, 1000);" id="sync">Mit Zeit synchronisieren</button>
+    <button onclick="clearInterval(setInterval(updateClock, 1000));" id="stop">Stoppen</button>
+
+    <input type="time" id="inputzeit">
+
+    <script>
+        let intervalId = null;
+
+        function updateClock() {
+            const now = new Date();
+
+            const hours = now.getHours() % 12;
+            const minutes = now.getMinutes();
+            const seconds = now.getSeconds();
+            const inputzeit = document.getElementById("inputzeit");
+
+            // Winkel für Stundenzeiger
+            const hourAngle = (hours * 30) + (minutes * 0.5) + 90;
+            const minuteAngle = (minutes * 6);
+            const secondsAngle = (seconds * 6);
+
+            document.getElementById("stunden").style.transform =
+                `rotate(${hourAngle}deg)`;
+
+            document.getElementById("minuten").style.transform =
+                `rotate(${minuteAngle}deg)`;
+
+            document.getElementById("sekunden").style.transform =
+                `rotate(${secondsAngle}deg)`;
+
+        }
+
+
+        document.getElementById("sync").onclick = () => {
+            if (!intervalId) {
+                updateClock();                      // sofort einmal aktualisieren
+                intervalId = setInterval(updateClock, 1000);  // jede Sekunde neu
+            }
+        };
+
+        document.getElementById("stop").onclick = () => {
+            clearInterval(intervalId);
+            intervalId = null;
+        };
+
+        document.getElementById("inputzeit").oninput = () => {
+            if (!intervalId) {
+                const stdmin = inputzeit.value.split(":")
+
+            document.getElementById("stunden").style.transform =
+                `rotate(${stdmin[0]*30+stdmin[1]*0.5+90}deg)`;
+            
+
+            document.getElementById("minuten").style.transform =
+                `rotate(${stdmin[1]*6}deg)`;
+            }
+        }
+
+    </script>
+    
+</body>
+</html>
