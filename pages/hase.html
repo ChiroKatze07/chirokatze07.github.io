@@ -81,7 +81,7 @@
             // Winkel für Stundenzeiger
             const hourAngle = (hours * 30) + (minutes * 0.5) + 90;
             const minuteAngle = (minutes * 6);
-            const secondsAngle = (seconds * 6);
+            const secondsAngle = (seconds * 6) + 135;
 
             document.getElementById("stunden").style.transform =
                 `rotate(${hourAngle}deg)`;
