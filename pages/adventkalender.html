@@ -222,8 +222,10 @@
             <h2>YouTube-Adventkalender</h2>
             <p>Hier auf dem supidupi-tollem YouTube-Kanal <a href="https://www.youtube.com/channel/UCnnWEf08fSpd-FQH4LVkofw" id="top20verlinkung">TopZwanzig</a> gibt es angeblich für jedes Adventkalendertürl ein neues Video. Also werde ich darauf verlinken.</p>
 
+            <p id="einblendung-kein-advent"></p>
+
             <div class="video-iframe">
-                <iframe src="https://www.youtube.com/embed?listType=playlist&list=UUnnWEf08fSpd-FQH4LVkofw"></iframe>
+                <iframe src="https://www.youtube.com/embed?listType=playlist&list=UUnnWEf08fSpd-FQH4LVkofw" id="TopZwanzigUploads"></iframe>
             </div>
             
 
@@ -357,11 +359,20 @@
             });
 
             //WEIHNACHTS-H1
-
-            if(month == 11 && today == 24) {
+            if(month == 11 && today == 24) { // 11 = Dezember
                 document.getElementById('home-link').textContent = "Schöne Weihnachten!";
                 document.getElementById('home-link:visited').style.color = "#D3AF37";
                 document.getElementById('home-link').style.color = "#D3AF37";
+            }
+
+            //TOPZWANZIG-EINBETTUNG
+            if(month == 11 & today <= 24) { // 11 = Dezember
+                //Nichts
+            } else {
+                document.getElementById('TopZwanzigUploads').style.display = "none";
+                document.getElementById('einblendung-kein-advent').textContent = "Derzeit ist keine Adventkalendersaison, deswegen ist hier kein Video verlinkt. Allerdings gibt's auch ohne den Anlass des Advents auf TopZwanzig tolle Videos zu sehen.\n Klick' auf den goldenen Link ein bisserl weiter oben, um auf den Kanal zu gelangen!";
+                document.getElementById('einblendung-kein-advent').style.fontStyle = "italic";
+                document.getElementById('einblendung-kein-advent').style.color = "#707070";
             }
         </script>
 </body>
