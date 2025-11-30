@@ -11,8 +11,8 @@
     <link rel="stylesheet" href="\site\default.css">
 </head>
 <body>
-        <style>
-    html {
+    <style>
+        html {
         font-family: 'Figtree', sans-serif;
         background-color: #1c1c1c;
         color: white
@@ -89,6 +89,7 @@
         .tag {
             background: #d10000;
             background: linear-gradient(50deg,rgba(209, 0, 0, 1) 0%, rgb(255, 122, 51) 100%);
+            background: linear-gradient(50deg,#c09f33 40%, #e4c662 100%);
             width: 13rem;
             height: 13rem;
             margin: 2rem;
@@ -128,7 +129,7 @@
         }
 
         .box {
-            outline-color:#d10000;
+            outline-color:#D3AF37;
             outline-style: solid;
             width: 13rem;
             height: 13rem;
@@ -141,6 +142,39 @@
 
         .today {
             display: flex;
+        }
+
+        .youtube-adventkalender > p{
+            font-size: 1rem;
+            font-style: normal;
+            text-align: left;
+            margin-left: 2rem;
+            text-overflow: ellipsis;
+        }
+
+        .video-iframe {
+            position: relative;
+            padding-bottom: 56.25%; /* 16:9 */
+            height: 0;
+            margin-left: 2rem;
+        }
+
+        .video-iframe iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 40%;
+            height: 40%;
+        }
+
+        #top20verlinkung {
+            color: #D3AF37;
+            text-decoration: underline;
+        }
+
+        #top20verlinkung:visited {
+            color: #c09f33;
+            text-decoration: underline;
         }
 
     </style>
@@ -156,10 +190,12 @@
         </nav>
         <hr class="top-hr">
 
+        <p style="text-align: left; margin-left: 2rem;">Willkommen auf dieser bescheidenen Unterseite meiner Webseite! Ich hoffe, dass ich dir mit dieser die Adventzeit ein klein wenig verschönern kann!</p>
+
         <div class="adventkalender">
             <div class="tag">
-                <h2 id="date">14.</h2>
-                <h3 id="month">Dezember</h3>
+                <h2 id="date">##.</h2>
+                <h3 id="month">#####</h3>
             </div>
 
             <div class="today">
@@ -179,6 +215,18 @@
                 </div>
 
             </div>
+        </div>
+
+        <div class="youtube-adventkalender">
+
+            <h2>YouTube-Adventkalender</h2>
+            <p>Hier auf dem supidupi-tollem YouTube Kanal <a href="https://www.youtube.com/channel/UCnnWEf08fSpd-FQH4LVkofw" id="top20verlinkung">TopZwanzig</a> gibt es angeblich für jedes Adventkalendertürl ein neues Video. Also werde ich darauf verlinken.</p>
+
+            <div class="video-iframe">
+                <iframe src="https://www.youtube.com/embed?listType=playlist&list=UUnnWEf08fSpd-FQH4LVkofw"></iframe>
+            </div>
+            
+
         </div>
         
 
@@ -261,9 +309,13 @@
             .then(data => {
 
                 if (month == 11) { //Wenn es Dezember ist ( Monat - 1 )
-                    const fact = data[today.toString()] || "es wurde nichts gefunden >:()";
+                    const fact = data[today.toString()] || "es wurde nichts gefunden >:(";
 
                     document.getElementById('day-music').textContent = fact;
+
+                    if(today > 24) {
+                        document.getElementById('day-music').textContent = "Es war schon Weihnachten";
+                    }
                 }
                 else {
                     document.getElementById('day-music').textContent = "Es ist noch nicht Dezember";
@@ -286,9 +338,13 @@
             .then(data => {
 
                 if (month == 11) { //Wenn es Dezember ist ( Monat - 1 )
-                    const fact = data[today.toString()] || "es wurde nichts gefunden >:()";
+                    const fact = data[today.toString()] || "es wurde nichts gefunden >:(";
 
                     document.getElementById('day-fact').textContent = fact;
+
+                    if(today > 24) {
+                        document.getElementById('day-fact').textContent = "Es war schon Weihnachten";
+                    }
                 }
                 else {
                     document.getElementById('day-fact').textContent = "Es ist noch nicht Dezember";
@@ -299,6 +355,14 @@
                 console.error(error);
                 document.getElementById('day-fact').textContent = "Fehler beim Laden der Daten.";
             });
+
+            //WEIHNACHTS-H1
+
+            if(month == 11 && today == 24) {
+                document.getElementById('home-link').textContent = "Schöne Weihnachten!";
+                document.getElementById('home-link:visited').style.color = "#D3AF37";
+                document.getElementById('home-link').style.color = "#D3AF37";
+            }
         </script>
 </body>
 </html>
